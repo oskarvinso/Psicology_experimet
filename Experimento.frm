@@ -14,6 +14,76 @@ Begin VB.Form Form1
    ScaleWidth      =   17325
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox Pic_L 
+      Appearance      =   0  'Flat
+      BackColor       =   &H000000FF&
+      ForeColor       =   &H80000008&
+      Height          =   2415
+      Left            =   0
+      ScaleHeight     =   2385
+      ScaleWidth      =   2265
+      TabIndex        =   28
+      Top             =   3960
+      Width           =   2295
+      Begin VB.Label Pic_Cover 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00808080&
+         ForeColor       =   &H80000008&
+         Height          =   375
+         Index           =   1
+         Left            =   720
+         TabIndex        =   31
+         Top             =   0
+         Width           =   375
+      End
+      Begin VB.Label Pic_Cover 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00808080&
+         ForeColor       =   &H80000008&
+         Height          =   375
+         Index           =   0
+         Left            =   0
+         TabIndex        =   30
+         Top             =   0
+         Width           =   375
+      End
+   End
+   Begin VB.PictureBox Pic_Abajo_Der 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FF00FF&
+      ForeColor       =   &H80000008&
+      Height          =   735
+      Left            =   2520
+      ScaleHeight     =   705
+      ScaleWidth      =   1065
+      TabIndex        =   27
+      Top             =   2040
+      Width           =   1095
+   End
+   Begin VB.PictureBox Pic_Arriba_Der 
+      Appearance      =   0  'Flat
+      BackColor       =   &H0080FF80&
+      ForeColor       =   &H80000008&
+      Height          =   735
+      Left            =   2400
+      ScaleHeight     =   705
+      ScaleWidth      =   1065
+      TabIndex        =   26
+      Top             =   840
+      Width           =   1095
+   End
+   Begin VB.PictureBox Pic_Abajo_Izq 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FF8080&
+      ForeColor       =   &H80000008&
+      Height          =   735
+      Left            =   840
+      ScaleHeight     =   705
+      ScaleWidth      =   1065
+      TabIndex        =   25
+      Top             =   2040
+      Width           =   1095
+   End
    Begin VB.Frame Frame2 
       Appearance      =   0  'Flat
       BackColor       =   &H0080C0FF&
@@ -256,13 +326,47 @@ Begin VB.Form Form1
       BackColor       =   &H008080FF&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   4575
-      Left            =   1080
-      ScaleHeight     =   4575
-      ScaleWidth      =   4335
+      Height          =   1005
+      Left            =   600
+      ScaleHeight     =   1005
+      ScaleWidth      =   1005
       TabIndex        =   0
-      Top             =   1200
-      Width           =   4335
+      Top             =   720
+      Width           =   1005
+   End
+   Begin VB.PictureBox Pic_R 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FF0000&
+      ForeColor       =   &H80000008&
+      Height          =   2415
+      Left            =   2520
+      ScaleHeight     =   2385
+      ScaleWidth      =   2385
+      TabIndex        =   29
+      Top             =   3960
+      Width           =   2415
+      Begin VB.Label Pic_Cover 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00808080&
+         ForeColor       =   &H80000008&
+         Height          =   375
+         Index           =   3
+         Left            =   960
+         TabIndex        =   33
+         Top             =   0
+         Width           =   375
+      End
+      Begin VB.Label Pic_Cover 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00808080&
+         ForeColor       =   &H80000008&
+         Height          =   375
+         Index           =   2
+         Left            =   0
+         TabIndex        =   32
+         Top             =   0
+         Width           =   375
+      End
    End
 End
 Attribute VB_Name = "Form1"
@@ -271,21 +375,38 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String
+Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String, Usr_Cod As String
+Public Created_ExlRegEve As Boolean
 
 Private Sub Form_Load()
 Iniciar
+
+'meusta el formulario de registro
+'Frame1.Visible = True
+
 Fase1
+
 End Sub
 
 Public Sub Fase1()
-MsgBox "inicia face 1"
 'carga de estimulos
-Pic_Arriba_Izq.Picture = LoadPicture(App.Path & "\data\stim001.jpg")
+With Pic_L
+    .Picture = LoadPicture(App.Path & "\data\stim001.jpg")
+    .Visible = True
+End With
+With Pic_R
+    .Picture = LoadPicture(App.Path & "\data\stim001.jpg")
+    .Visible = True
+End With
+Pic_Cover(0).Visible = True
+Pic_Cover(1).Visible = True
+Pic_Cover(2).Visible = True
+Pic_Cover(3).Visible = True
 End Sub
 
 
 Public Sub Iniciar()
+Hide_All
 'Acomoda la ventana y los formularios
 With Form1
     .Height = Screen.Height
@@ -350,6 +471,69 @@ With Command3
 End With
 
 
+'acomoda los pic donde se cargaran los estimulos
+With Pic_Arriba_Izq
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Arriba_Izq.Height
+    .Left = Screen.Width / 4 - Pic_Arriba_Izq.Width / 2
+    .Top = Screen.Height / 4 - Pic_Arriba_Izq.Height / 2
+End With
+With Pic_Abajo_Izq
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Abajo_Izq.Height
+    .Left = Screen.Width / 4 - Pic_Abajo_Izq.Width / 2
+    .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Izq.Height / 2
+End With
+With Pic_Arriba_Der
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Arriba_Der.Height
+    .Left = ((Screen.Width / 4) * 3) - Pic_Arriba_Der.Width / 2
+    .Top = Screen.Height / 4 - Pic_Arriba_Der.Height / 2
+End With
+With Pic_Abajo_Der
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Abajo_Der.Height
+    .Left = ((Screen.Width / 4) * 3) - Pic_Abajo_Der.Width / 2
+    .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Der.Height / 2
+End With
+With Pic_L
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_L.Height
+    .Left = Screen.Width / 4 - Pic_L.Width / 2
+    .Top = Screen.Height / 2 - Pic_L.Height / 2
+End With
+With Pic_R
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_R.Height
+    .Left = ((Screen.Width / 4) * 3) - Pic_R.Width / 2
+    .Top = Screen.Height / 2 - Pic_R.Height / 2
+End With
+'posicionamiento de los covers
+With Pic_Cover(0)
+    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 8)
+    .Width = Pic_Cover(0).Height
+    .Left = Pic_L.Width / 2 - (Pic_Cover(0).Width / 2)
+    .Top = 0
+End With
+With Pic_Cover(1)
+    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 8)
+    .Width = Pic_Cover(1).Height
+    .Left = Pic_L.Width / 2 - (Pic_Cover(1).Width / 2)
+    .Top = Pic_L.Height - (Pic_Cover(1).Height)
+End With
+With Pic_Cover(2)
+    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 8)
+    .Width = Pic_Cover(2).Height
+    .Left = Pic_R.Width / 2 - (Pic_Cover(2).Width / 2)
+    .Top = 0
+End With
+With Pic_Cover(3)
+    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 8)
+    .Width = Pic_Cover(3).Height
+    .Left = Pic_R.Width / 2 - (Pic_Cover(3).Width / 2)
+    .Top = Pic_R.Height - (Pic_Cover(3).Height)
+End With
+
 'carga los años del formulario
 Dim yi As Integer, yf As Integer, i As Integer
 yi = Right(Date, 4)
@@ -361,52 +545,61 @@ While yf < yi
 Wend
 Combo3.Text = "Año"
 
+
+
+
+
+End Sub
+
+Private Sub Command2_Click() ' Este es el boton de acepto y entiendo el concentimiento
+'guarda los datos del usuario en un excel
+Reg_Usr
 'oculta todo
 Hide_All
-
-'meusta el consentimiento informado
-Frame1.Visible = True
-
-'acomoda los pic donde se cargaran los estimulos
-
-
-
+'inicia face 1 del experimento
+Fase1
 End Sub
 
-Private Sub Command2_Click()
-Reg_Usr
-Hide_All
-End Sub
-
-Private Sub Command3_Click()
+Private Sub Command3_Click() ' este es el boton de no acepto y salir
 End
 End Sub
 
 
-Private Sub Command1_Click()
+Private Sub Command1_Click() ' este es el boton de iniciar que esta en el formulario de registro
 'Calcula la edad del paciente
-Dim y As Integer
+Dim Y As Integer
 Usr_Age = Right(Date, 4) - Combo3.Text
 'carga las variables con los datos
 Usr_Name = Text1.Text
 Usr_Id = Text2.Text
 Usr_IdCity = Text3.Text
 Usr_Gender = Combo4.Text
-'pone los datos en el formulario
+'pone los datos en el formulario de consentimiento
 Label5.Caption = Usr_Name
 Label6.Caption = Usr_Id
 Label7.Caption = Usr_IdCity
 Label8.Caption = Left(Date, 2)
 Label9.Caption = Left(Right(Date, 7), 2)
 Label10.Caption = Right(Date, 4)
+'muestra el consentimiento informado
 Frame2.Visible = True
 End Sub
 
 
 Public Sub Hide_All()
-Picture1.Visible = False
+Pic_Arriba_Izq.Visible = False
 Frame1.Visible = False
 Frame2.Visible = False
+Pic_Arriba_Izq.Visible = False
+Pic_Abajo_Izq.Visible = False
+Pic_Arriba_Der.Visible = False
+Pic_Abajo_Der.Visible = False
+Pic_L.Visible = False
+Pic_R.Visible = False
+Pic_Cover(0).Visible = False
+Pic_Cover(1).Visible = False
+Pic_Cover(2).Visible = False
+Pic_Cover(3).Visible = False
 End Sub
 
 Public Sub Reg_Usr()
@@ -428,9 +621,10 @@ Set HojaExcel = LibroExcel.Sheets(1)
 While HojaExcel.range("A" & UltimaDisponible) <> ""
     UltimaDisponible = UltimaDisponible + 1
 Wend
+Usr_Cod = (UltimaDisponible - 1) & Left(Usr_Name, 1) & Left(Usr_Gender, 1) & Usr_Age
 ' escribe registro
 With HojaExcel
-    .range("A" & UltimaDisponible) = (UltimaDisponible - 1) & Left(Usr_Name, 1) & Left(Usr_Gender, 1) & Usr_Age
+    .range("A" & UltimaDisponible) = Usr_Cod
     .range("B" & UltimaDisponible) = Usr_Name
     .range("C" & UltimaDisponible) = Usr_Age
     .range("D" & UltimaDisponible) = Usr_Gender
@@ -438,13 +632,6 @@ With HojaExcel
     .range("F" & UltimaDisponible) = Usr_Id
 End With
 
-
-'Aqui es donde ocurre la magia. tu pones hoja excel .range y entreparentesis la cadena de caracteres
-'para jalar los datos del excel, puedes poner un rango o una celdita usando la misma nomenclatura que en excel
-'Print HojaExcel.range(Text1.Text)
-
-'esto tiene que ir, asi no lo veas el excel se abre, y si no lo pones quedaria abierto y tocaria cerrarlo desde
-'el administrador de tareas con control alt suprimir.
 LibroExcel.save
 Excel.Quit
 
@@ -461,16 +648,28 @@ Excel.Quit
 End Sub
 
 
-Public Sub DB_Gen()
+Public Sub Reg_Event()
 Dim oExcel As Object
 Dim oBook As Object
 Dim oSheet As Object
 Dim ruta As String
-    
-'Crear nuevo archivo de excel
-Set oExcel = CreateObject("Excel.Application")
-Set oBook = oExcel.Workbooks.Add
-      
+If Created_ExlRegEve = False Then
+    ruta = App.Path + "\data\" & Usr_Cod & ".xlsx"
+    Set oExcel = CreateObject("Excel.Application")
+    Set oBook = oExcel.Workbooks.Add
+    Set oSheet = oBook.Worksheets(1)
+    oSheet.range("A1").Value = "Nombre:"
+    oSheet.range("B1").Value = "Nombre del paciente"
+    oSheet.range("C1").Value = "Fecha y hora:"
+    oSheet.range("D1").Value = (Date & " " & Time)
+    Created_ExlRegEve = True
+End If
+
+'encuentra ultima celda disponible
+While HojaExcel.range("A" & UltimaDisponible) <> ""
+    UltimaDisponible = UltimaDisponible + 1
+Wend
+
 'agregar datos a la primer hoja en el excel
 Set oSheet = oBook.Worksheets(1)
 oSheet.range("A1").Value = "Nombre:"
@@ -478,9 +677,38 @@ oSheet.range("B1").Value = "Nombre del paciente"
 oSheet.range("C1").Value = "Fecha y hora:"
 oSheet.range("D1").Value = (Date & " " & Time)
 
-ruta = App.Path + "\data\Nombre_Paciente.xlsx"
+
 
 'Guardar el excel y cerrarlo
 oBook.SaveAs ruta
 oExcel.Quit
 End Sub
+
+
+
+Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Pic_Cover(Index).BackStyle = 0
+End Sub
+
+
+Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Oculta_Covers
+End Sub
+Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Oculta_Covers
+End Sub
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Oculta_Covers
+End Sub
+
+Sub Oculta_Covers()
+Dim i As Integer
+While i < Pic_Cover.Count
+    Pic_Cover(i).BackStyle = 1
+    i = i + 1
+Wend
+i = 0
+End Sub
+
+
+
