@@ -24,22 +24,6 @@ Begin VB.Form Form1
       TabIndex        =   28
       Top             =   3960
       Width           =   2295
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   1
-         Left            =   0
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   0
-         Left            =   360
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
@@ -61,6 +45,22 @@ Begin VB.Form Form1
          TabIndex        =   30
          Top             =   360
          Width           =   375
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   0
+         Left            =   360
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
       End
    End
    Begin VB.PictureBox Pic_Abajo_Der 
@@ -360,22 +360,6 @@ Begin VB.Form Form1
       TabIndex        =   29
       Top             =   3960
       Width           =   2415
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   3
-         Left            =   0
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   2
-         Left            =   480
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
@@ -397,6 +381,22 @@ Begin VB.Form Form1
          TabIndex        =   32
          Top             =   360
          Width           =   375
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   3
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   2
+         Left            =   480
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
       End
    End
 End
