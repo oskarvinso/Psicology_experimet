@@ -420,6 +420,7 @@ Pic_R.Visible = True
 Pic_L.Visible = True
 
 componente(0).Picture = LoadPicture(App.Path & "\data\img\wt.jpg")
+componente(0).Visible = True
 
 
 Pic_Cover(0).Visible = True
@@ -574,26 +575,26 @@ End With
 
 'posicionamiento de los componentes
 With componente(0)
-    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
-    .Width = componente(0).Height
+    '.Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
+    '.Width = componente(0).Height
     .Left = Pic_L.Width / 2 - (componente(0).Width / 2)
     .Top = 0
 End With
 With componente(1)
-    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
-    .Width = componente(1).Height
+    '.Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
+    '.Width = componente(1).Height
     .Left = Pic_L.Width / 2 - (componente(1).Width / 2)
     .Top = Pic_L.Height - (componente(1).Height)
 End With
 With componente(2)
-    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
-    .Width = componente(2).Height
+    '.Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
+    '.Width = componente(2).Height
     .Left = Pic_R.Width / 2 - (componente(2).Width / 2)
     .Top = 0
 End With
 With componente(3)
-    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
-    .Width = componente(3).Height
+    '.Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
+    '.Width = componente(3).Height
     .Left = Pic_R.Width / 2 - (componente(3).Width / 2)
     .Top = Pic_R.Height - (componente(3).Height)
 End With
