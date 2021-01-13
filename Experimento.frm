@@ -15,7 +15,7 @@ Begin VB.Form Form1
    StartUpPosition =   3  'Windows Default
    Begin VB.PictureBox Pic_L 
       Appearance      =   0  'Flat
-      BackColor       =   &H000000FF&
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   2415
       Left            =   0
@@ -24,15 +24,31 @@ Begin VB.Form Form1
       TabIndex        =   28
       Top             =   3960
       Width           =   2295
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   0
+         Left            =   360
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
          ForeColor       =   &H80000008&
          Height          =   375
          Index           =   1
-         Left            =   720
+         Left            =   480
          TabIndex        =   31
-         Top             =   0
+         Top             =   360
          Width           =   375
       End
       Begin VB.Label Pic_Cover 
@@ -43,7 +59,7 @@ Begin VB.Form Form1
          Index           =   0
          Left            =   0
          TabIndex        =   30
-         Top             =   0
+         Top             =   360
          Width           =   375
       End
    End
@@ -335,7 +351,7 @@ Begin VB.Form Form1
    End
    Begin VB.PictureBox Pic_R 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FF0000&
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   2415
       Left            =   2520
@@ -344,15 +360,31 @@ Begin VB.Form Form1
       TabIndex        =   29
       Top             =   3960
       Width           =   2415
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   3
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   2
+         Left            =   480
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
          ForeColor       =   &H80000008&
          Height          =   375
          Index           =   3
-         Left            =   960
+         Left            =   480
          TabIndex        =   33
-         Top             =   0
+         Top             =   360
          Width           =   375
       End
       Begin VB.Label Pic_Cover 
@@ -363,7 +395,7 @@ Begin VB.Form Form1
          Index           =   2
          Left            =   0
          TabIndex        =   32
-         Top             =   0
+         Top             =   360
          Width           =   375
       End
    End
@@ -384,14 +416,12 @@ Public REExcel As Object, REBook As Object, RESheet As Object, REruta As String
 
 Public Sub Fase1()
 'carga de estimulos
-With Pic_L
-    .Picture = LoadPicture(App.Path & "\data\stim001.jpg")
-    .Visible = True
-End With
-With Pic_R
-    .Picture = LoadPicture(App.Path & "\data\stim001.jpg")
-    .Visible = True
-End With
+Pic_R.Visible = True
+Pic_L.Visible = True
+
+componente(0).Picture = LoadPicture(App.Path & "\data\img\wt.jpg")
+
+
 Pic_Cover(0).Visible = True
 Pic_Cover(1).Visible = True
 Pic_Cover(2).Visible = True
@@ -487,42 +517,34 @@ End With
 
 
 'acomoda los pic donde se cargaran los estimulos
-With Pic_Arriba_Izq
+With Pic_L
     .Height = (Screen.Height / 2) - (Screen.Height / 8)
-    .Width = Pic_Arriba_Izq.Height
-    .Left = Screen.Width / 4 - Pic_Arriba_Izq.Width / 2
-    .Top = Screen.Height / 4 - Pic_Arriba_Izq.Height / 2
+    .Width = Pic_L.Height
+    .Left = Screen.Width / 4 - Pic_L.Width / 2
+    .Top = Screen.Height / 4 - Pic_L.Height / 2
 End With
+
+With Pic_R
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_R.Height
+    .Left = ((Screen.Width / 4) * 3) - Pic_R.Width / 2
+    .Top = Screen.Height / 4 - Pic_R.Height / 2
+End With
+
 With Pic_Abajo_Izq
     .Height = (Screen.Height / 2) - (Screen.Height / 8)
     .Width = Pic_Abajo_Izq.Height
     .Left = Screen.Width / 4 - Pic_Abajo_Izq.Width / 2
     .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Izq.Height / 2
 End With
-With Pic_Arriba_Der
-    .Height = (Screen.Height / 2) - (Screen.Height / 8)
-    .Width = Pic_Arriba_Der.Height
-    .Left = ((Screen.Width / 4) * 3) - Pic_Arriba_Der.Width / 2
-    .Top = Screen.Height / 4 - Pic_Arriba_Der.Height / 2
-End With
+
 With Pic_Abajo_Der
     .Height = (Screen.Height / 2) - (Screen.Height / 8)
     .Width = Pic_Abajo_Der.Height
     .Left = ((Screen.Width / 4) * 3) - Pic_Abajo_Der.Width / 2
     .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Der.Height / 2
 End With
-With Pic_L
-    .Height = (Screen.Height / 2) - (Screen.Height / 8)
-    .Width = Pic_L.Height
-    .Left = Screen.Width / 4 - Pic_L.Width / 2
-    .Top = Screen.Height / 2 - Pic_L.Height / 2
-End With
-With Pic_R
-    .Height = (Screen.Height / 2) - (Screen.Height / 8)
-    .Width = Pic_R.Height
-    .Left = ((Screen.Width / 4) * 3) - Pic_R.Width / 2
-    .Top = Screen.Height / 2 - Pic_R.Height / 2
-End With
+
 'posicionamiento de los covers
 With Pic_Cover(0)
     .Height = (Pic_L.Height / 2) - (Pic_L.Height / 8)
@@ -548,6 +570,34 @@ With Pic_Cover(3)
     .Left = Pic_R.Width / 2 - (Pic_Cover(3).Width / 2)
     .Top = Pic_R.Height - (Pic_Cover(3).Height)
 End With
+
+
+'posicionamiento de los componentes
+With componente(0)
+    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
+    .Width = componente(0).Height
+    .Left = Pic_L.Width / 2 - (componente(0).Width / 2)
+    .Top = 0
+End With
+With componente(1)
+    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
+    .Width = componente(1).Height
+    .Left = Pic_L.Width / 2 - (componente(1).Width / 2)
+    .Top = Pic_L.Height - (componente(1).Height)
+End With
+With componente(2)
+    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
+    .Width = componente(2).Height
+    .Left = Pic_R.Width / 2 - (componente(2).Width / 2)
+    .Top = 0
+End With
+With componente(3)
+    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
+    .Width = componente(3).Height
+    .Left = Pic_R.Width / 2 - (componente(3).Width / 2)
+    .Top = Pic_R.Height - (componente(3).Height)
+End With
+
 
 'carga los años del formulario
 Dim yi As Integer, yf As Integer, i As Integer
@@ -617,6 +667,10 @@ Pic_Cover(0).Visible = False
 Pic_Cover(1).Visible = False
 Pic_Cover(2).Visible = False
 Pic_Cover(3).Visible = False
+componente(0).Visible = False
+componente(1).Visible = False
+componente(2).Visible = False
+componente(3).Visible = False
 End Sub
 
 Public Sub Reg_Usr()
