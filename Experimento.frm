@@ -411,17 +411,18 @@ Public Created_ExlRegEve As Boolean
 Public Evento As String, Area As String
 Public IndxReg As Integer
 Public REExcel As Object, REBook As Object, RESheet As Object, REruta As String
-
+Public Pos As Integer
 
 
 Public Sub Fase1()
+
+Randomizar
+
+Mostrar
+
 'carga de estimulos
 Pic_R.Visible = True
 Pic_L.Visible = True
-
-componente(0).Picture = LoadPicture(App.Path & "\data\img\wt.jpg")
-componente(0).Visible = True
-
 
 Pic_Cover(0).Visible = True
 Pic_Cover(1).Visible = True
@@ -432,15 +433,15 @@ End Sub
 
 
 
+Private Sub componente_Click(Index As Integer)
 
+If componente(Index).Picture = -1694164447 Or componente(Index).Picture = 1426397766 Then
+    MsgBox ("Correcto")
+Else
+    MsgBox ("Incorrecto")
+End If
 
-
-
-
-
-
-
-
+End Sub
 
 Private Sub Form_Load()
 Iniciar
@@ -578,25 +579,25 @@ With componente(0)
     '.Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
     '.Width = componente(0).Height
     .Left = Pic_L.Width / 2 - (componente(0).Width / 2)
-    .Top = 0
+    .Top = 100
 End With
 With componente(1)
     '.Height = (Pic_L.Height / 2) - (Pic_L.Height / 16)
     '.Width = componente(1).Height
     .Left = Pic_L.Width / 2 - (componente(1).Width / 2)
-    .Top = Pic_L.Height - (componente(1).Height)
+    .Top = Pic_L.Height - (componente(1).Height + 100)
 End With
 With componente(2)
     '.Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
     '.Width = componente(2).Height
     .Left = Pic_R.Width / 2 - (componente(2).Width / 2)
-    .Top = 0
+    .Top = 100
 End With
 With componente(3)
     '.Height = (Pic_R.Height / 2) - (Pic_R.Height / 16)
     '.Width = componente(3).Height
     .Left = Pic_R.Width / 2 - (componente(3).Width / 2)
-    .Top = Pic_R.Height - (componente(3).Height)
+    .Top = Pic_R.Height - (componente(3).Height + 100)
 End With
 
 
@@ -757,7 +758,7 @@ REExcel.Quit
 End Sub
 
 Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-Pic_Cover(Index).BackStyle = 0
+Pic_Cover(Index).Visible = False
 If Area <> ("Cover " & Index) Then
     Evento = "Mouse over"
     Area = ("Cover " & Index)
@@ -767,7 +768,7 @@ End Sub
 
 
 Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Oculta_Covers
+Muestra_Covers
 If Area <> "Estimulo de la izquierda" Then
     Evento = "Mouse over"
     Area = "Estimulo de la izquierda"
@@ -775,7 +776,7 @@ If Area <> "Estimulo de la izquierda" Then
 End If
 End Sub
 Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Oculta_Covers
+Muestra_Covers
 If Area <> "Estimulo de la derecha" Then
     Evento = "Mouse over"
     Area = "Estimulo de la derecha"
@@ -783,7 +784,7 @@ If Area <> "Estimulo de la derecha" Then
 End If
 End Sub
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Oculta_Covers
+Muestra_Covers
 If Area <> "Fondo" Then
     Evento = "Mouse over"
     Area = "Fondo"
@@ -794,10 +795,76 @@ End Sub
 Sub Oculta_Covers()
 Dim i As Integer
 While i < Pic_Cover.Count
-    Pic_Cover(i).BackStyle = 1
+    Pic_Cover(i).Visible = False
     i = i + 1
 Wend
 i = 0
+End Sub
+
+Sub Muestra_Covers()
+Dim i As Integer
+While i < Pic_Cover.Count
+    Pic_Cover(i).Visible = True
+    i = i + 1
+Wend
+i = 0
+End Sub
+
+Sub Randomizar()
+
+Dim CntPosI As Integer
+Dim CntPosD As Integer
+
+If CntPosI Or CntPosD = 3 Then
+    CntPosD = 0
+CntPosI = 0
+    If Pos = 0 Then
+        Pos = 1
+    Else
+        Pos = 0
+    End If
+Else
+    Pos = Rnd(0 - 1)
+    If Pos = 1 Then
+        CntPosD = CntPosD + 1
+    Else
+        CntPosI = CntPosI + 1
+    End If
+End If
+End Sub
+
+Sub Mostrar()
+
+If Pos = 1 Then
+    
+    componente(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+    componente(0).Visible = True
+
+    componente(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+    componente(1).Visible = True
+
+    componente(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+    componente(2).Visible = True
+
+    componente(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+    componente(3).Visible = True
+
+Else
+
+    componente(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+    componente(0).Visible = True
+
+    componente(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+    componente(1).Visible = True
+
+    componente(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+    componente(2).Visible = True
+
+    componente(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+    componente(3).Visible = True
+    
+End If
+
 End Sub
 
 
