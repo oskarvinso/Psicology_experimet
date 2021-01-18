@@ -13,6 +13,37 @@ Begin VB.Form Form1
    ScaleHeight     =   10515
    ScaleWidth      =   17325
    StartUpPosition =   3  'Windows Default
+   Begin VB.Timer Timer_fixation 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   8880
+      Top             =   6600
+   End
+   Begin VB.PictureBox Fixation 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      ForeColor       =   &H80000008&
+      Height          =   2655
+      Left            =   6480
+      ScaleHeight     =   2625
+      ScaleWidth      =   4665
+      TabIndex        =   34
+      Top             =   5640
+      Visible         =   0   'False
+      Width           =   4695
+      Begin VB.Line Line2 
+         X1              =   1800
+         X2              =   2280
+         Y1              =   1320
+         Y2              =   1320
+      End
+      Begin VB.Line Line1 
+         X1              =   2040
+         X2              =   2040
+         Y1              =   1080
+         Y2              =   1440
+      End
+   End
    Begin VB.PictureBox Pic_L 
       Appearance      =   0  'Flat
       BackColor       =   &H00FFFFFF&
@@ -24,6 +55,22 @@ Begin VB.Form Form1
       TabIndex        =   28
       Top             =   3960
       Width           =   2295
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   0
+         Left            =   360
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
@@ -45,22 +92,6 @@ Begin VB.Form Form1
          TabIndex        =   30
          Top             =   360
          Width           =   375
-      End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   1
-         Left            =   0
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   0
-         Left            =   360
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
       End
    End
    Begin VB.PictureBox Pic_Abajo_Der 
@@ -360,6 +391,22 @@ Begin VB.Form Form1
       TabIndex        =   29
       Top             =   3960
       Width           =   2415
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   2
+         Left            =   480
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Image componente 
+         Height          =   255
+         Index           =   3
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Label Pic_Cover 
          Appearance      =   0  'Flat
          BackColor       =   &H00808080&
@@ -382,22 +429,6 @@ Begin VB.Form Form1
          Top             =   360
          Width           =   375
       End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   3
-         Left            =   0
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.Image componente 
-         Height          =   255
-         Index           =   2
-         Left            =   480
-         Stretch         =   -1  'True
-         Top             =   0
-         Width           =   255
-      End
    End
 End
 Attribute VB_Name = "Form1"
@@ -412,6 +443,7 @@ Public Evento As String, Area As String
 Public IndxReg As Integer
 Public REExcel As Object, REBook As Object, RESheet As Object, REruta As String
 Public Pos As Integer
+Dim Component_Pos(3) As String
 
 
 Public Sub Fase1()
@@ -435,13 +467,14 @@ End Sub
 
 Private Sub componente_Click(Index As Integer)
 
-If componente(Index).Picture = -1694164447 Or componente(Index).Picture = 1426397766 Then
+If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
     MsgBox ("Correcto")
 Else
     MsgBox ("Incorrecto")
 End If
 
 End Sub
+
 
 Private Sub Form_Load()
 Iniciar
@@ -517,7 +550,25 @@ With Command3
     .Left = Picture2.Width - (Command3.Width + 200)
 End With
 
-
+'ubica el punto de fijación después de crear el Excel y antes de iniciar el entrenamiento
+With Fixation
+    .Height = Screen.Height
+    .Width = Screen.Width
+    .Top = 0
+    .Left = 0
+End With
+With Line1
+    .X1 = Fixation.Width / 2
+    .Y1 = (Fixation.Height / 2) - 200
+    .X2 = Fixation.Width / 2
+    .Y2 = (Fixation.Height / 2) + 200
+End With
+With Line2
+    .X1 = (Fixation.Width / 2) - 200
+    .Y1 = Fixation.Height / 2
+    .X2 = (Fixation.Width / 2) + 200
+    .Y2 = Fixation.Height / 2
+End With
 'acomoda los pic donde se cargaran los estimulos
 With Pic_L
     .Height = (Screen.Height / 2) - (Screen.Height / 8)
@@ -549,28 +600,20 @@ End With
 
 'posicionamiento de los covers
 With Pic_Cover(0)
-    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 8)
-    .Width = Pic_Cover(0).Height
     .Left = Pic_L.Width / 2 - (Pic_Cover(0).Width / 2)
-    .Top = 0
+    .Top = 50
 End With
 With Pic_Cover(1)
-    .Height = (Pic_L.Height / 2) - (Pic_L.Height / 8)
-    .Width = Pic_Cover(1).Height
     .Left = Pic_L.Width / 2 - (Pic_Cover(1).Width / 2)
-    .Top = Pic_L.Height - (Pic_Cover(1).Height)
-End With
+    .Top = Pic_L.Height - (Pic_Cover(1).Height + 50)
+    End With
 With Pic_Cover(2)
-    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 8)
-    .Width = Pic_Cover(2).Height
-    .Left = Pic_R.Width / 2 - (Pic_Cover(2).Width / 2)
-    .Top = 0
-End With
+    .Left = Pic_R.Width / 2 - (Pic_Cover(0).Width / 2)
+    .Top = 50
+    End With
 With Pic_Cover(3)
-    .Height = (Pic_R.Height / 2) - (Pic_R.Height / 8)
-    .Width = Pic_Cover(3).Height
-    .Left = Pic_R.Width / 2 - (Pic_Cover(3).Width / 2)
-    .Top = Pic_R.Height - (Pic_Cover(3).Height)
+    .Left = Pic_R.Width / 2 - (Pic_Cover(1).Width / 2)
+    .Top = Pic_R.Height - (Pic_Cover(1).Height + 50)
 End With
 
 
@@ -621,11 +664,13 @@ IndxReg = 1
 End Sub
 
 Private Sub Command2_Click() ' Este es el boton de acepto y entiendo el concentimiento
+Fixation.Visible = True
 'guarda los datos del usuario en un excel
 Reg_Usr
+Timer_fixation.Enabled = True
 'oculta todo
 Hide_All
-'inicia face 1 del experimento
+'inicia fase 1 del experimento
 Fase1
 End Sub
 
@@ -758,7 +803,8 @@ REExcel.Quit
 End Sub
 
 Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-Pic_Cover(Index).Visible = False
+Pic_Cover(Index).BackColor = &HFFFFFF
+componente(Index).Visible = True
 If Area <> ("Cover " & Index) Then
     Evento = "Mouse over"
     Area = ("Cover " & Index)
@@ -795,7 +841,8 @@ End Sub
 Sub Oculta_Covers()
 Dim i As Integer
 While i < Pic_Cover.Count
-    Pic_Cover(i).Visible = False
+    Pic_Cover(i).BackColor = &HFFFFFF
+    componente(i).Visible = True
     i = i + 1
 Wend
 i = 0
@@ -804,7 +851,8 @@ End Sub
 Sub Muestra_Covers()
 Dim i As Integer
 While i < Pic_Cover.Count
-    Pic_Cover(i).Visible = True
+    Pic_Cover(i).BackColor = &H808080
+    componente(i).Visible = False
     i = i + 1
 Wend
 i = 0
@@ -839,33 +887,42 @@ If Pos = 1 Then
     
     componente(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
     componente(0).Visible = True
+    Component_Pos(0) = "triangulo"
 
     componente(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
     componente(1).Visible = True
-
+    Component_Pos(1) = "rojo"
+    
     componente(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
     componente(2).Visible = True
-
+    Component_Pos(2) = "cuadrado"
+    
     componente(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
     componente(3).Visible = True
+    Component_Pos(3) = "verde"
 
 Else
 
     componente(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
     componente(0).Visible = True
+    Component_Pos(0) = "cuadrado"
 
     componente(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
     componente(1).Visible = True
+    Component_Pos(1) = "verde"
 
     componente(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
     componente(2).Visible = True
+    Component_Pos(2) = "triangulo"
 
     componente(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
     componente(3).Visible = True
-    
+    Component_Pos(3) = "rojo"
 End If
 
 End Sub
 
-
-
+Private Sub Timer_fixation_Timer()
+    Fixation.Visible = False
+    Timer_fixation.Enabled = False
+End Sub
