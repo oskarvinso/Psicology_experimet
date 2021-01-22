@@ -13,6 +13,18 @@ Begin VB.Form Form1
    ScaleHeight     =   10515
    ScaleWidth      =   17325
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox Blanco 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      ForeColor       =   &H80000008&
+      Height          =   1215
+      Left            =   11880
+      ScaleHeight     =   1185
+      ScaleWidth      =   1185
+      TabIndex        =   35
+      Top             =   5640
+      Width           =   1215
+   End
    Begin VB.Timer Timer_fixation 
       Enabled         =   0   'False
       Interval        =   1000
@@ -31,6 +43,12 @@ Begin VB.Form Form1
       Top             =   5640
       Visible         =   0   'False
       Width           =   4695
+      Begin VB.Timer itt 
+         Enabled         =   0   'False
+         Interval        =   500
+         Left            =   480
+         Top             =   840
+      End
       Begin VB.Line Line2 
          X1              =   1800
          X2              =   2280
@@ -96,7 +114,7 @@ Begin VB.Form Form1
    End
    Begin VB.PictureBox Pic_Abajo_Der 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FF00FF&
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   735
       Left            =   2520
@@ -105,10 +123,17 @@ Begin VB.Form Form1
       TabIndex        =   27
       Top             =   2040
       Width           =   1095
+      Begin VB.Image comp_test1 
+         Height          =   255
+         Index           =   3
+         Left            =   0
+         Top             =   0
+         Width           =   255
+      End
    End
    Begin VB.PictureBox Pic_Arriba_Der 
       Appearance      =   0  'Flat
-      BackColor       =   &H0080FF80&
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   735
       Left            =   2400
@@ -117,10 +142,17 @@ Begin VB.Form Form1
       TabIndex        =   26
       Top             =   840
       Width           =   1095
+      Begin VB.Image comp_test1 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Top             =   0
+         Width           =   255
+      End
    End
    Begin VB.PictureBox Pic_Abajo_Izq 
       Appearance      =   0  'Flat
-      BackColor       =   &H00FF8080&
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   735
       Left            =   840
@@ -129,6 +161,13 @@ Begin VB.Form Form1
       TabIndex        =   25
       Top             =   2040
       Width           =   1095
+      Begin VB.Image comp_test1 
+         Height          =   255
+         Index           =   2
+         Left            =   0
+         Top             =   0
+         Width           =   255
+      End
    End
    Begin VB.Frame Frame2 
       Appearance      =   0  'Flat
@@ -369,16 +408,22 @@ Begin VB.Form Form1
    End
    Begin VB.PictureBox Pic_Arriba_Izq 
       Appearance      =   0  'Flat
-      BackColor       =   &H008080FF&
-      BorderStyle     =   0  'None
+      BackColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
       Height          =   1005
       Left            =   600
-      ScaleHeight     =   1005
-      ScaleWidth      =   1005
+      ScaleHeight     =   975
+      ScaleWidth      =   975
       TabIndex        =   0
       Top             =   720
       Width           =   1005
+      Begin VB.Image comp_test1 
+         Height          =   255
+         Index           =   0
+         Left            =   360
+         Top             =   600
+         Width           =   255
+      End
    End
    Begin VB.PictureBox Pic_R 
       Appearance      =   0  'Flat
@@ -437,6 +482,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+Private Declare Function Beep Lib "kernel32" (ByVal dwFreq As Long, ByVal dwDuration As Long) As Long
 Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String, Usr_Cod As String
 Public Created_ExlRegEve As Boolean
 Public Evento As String, Area As String
@@ -444,6 +490,9 @@ Public IndxReg As Integer
 Public REExcel As Object, REBook As Object, RESheet As Object, REruta As String
 Public Pos As Integer
 Dim Component_Pos(3) As String
+Public Aciertos As Integer
+Public Triangulo As String, Cuadrado As String, Rojo As String, Verde As String
+
 
 
 Public Sub Fase1()
@@ -463,16 +512,46 @@ Pic_Cover(3).Visible = True
 End Sub
 
 
+Public Sub Test_1()
 
+Hide_All
+
+Pic_Arriba_Izq.Visible = True
+Pic_Arriba_Der.Visible = True
+Pic_Abajo_Izq.Visible = True
+Pic_Abajo_Der.Visible = True
+
+
+End Sub
+
+
+
+Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Muestra_Covers
+End Sub
 
 Private Sub componente_Click(Index As Integer)
+If Aciertos = 12 Then
+    
+    Test_1
+  
+Else
+'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
+Blanco.Visible = True
+Randomizar
 
 If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
-    MsgBox ("Correcto")
+    Beep 440, 500
+    Aciertos = Aciertos + 1
 Else
-    MsgBox ("Incorrecto")
+    Beep 300, 500
+    Aciertos = 0
 End If
 
+Mostrar
+itt.Enabled = True
+
+End If
 End Sub
 
 
@@ -485,6 +564,12 @@ End Sub
 
 Public Sub Iniciar()
 Hide_All
+'carga las rutas de las imágenes
+Triangulo = (App.Path & "\data\img\triangulo.jpg")
+Cuadrado = (App.Path & "\data\img\cuadrado.jpg")
+Rojo = (App.Path & "\data\img\rojo.jpg")
+Verde = (App.Path & "\data\img\verde.jpg")
+
 'Acomoda la ventana y los formularios
 With Form1
     .Height = Screen.Height
@@ -550,6 +635,13 @@ With Command3
     .Left = Picture2.Width - (Command3.Width + 200)
 End With
 
+With Blanco
+    .Height = Screen.Height
+    .Width = Screen.Width
+    .Top = 0
+    .Left = 0
+End With
+    
 'ubica el punto de fijación después de crear el Excel y antes de iniciar el entrenamiento
 With Fixation
     .Height = Screen.Height
@@ -596,6 +688,27 @@ With Pic_Abajo_Der
     .Width = Pic_Abajo_Der.Height
     .Left = ((Screen.Width / 4) * 3) - Pic_Abajo_Der.Width / 2
     .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Der.Height / 2
+End With
+
+'posicionamiento componentes test 1
+With comp_test1(0)
+    .Top = (Pic_Arriba_Izq.Height / 2) - (comp_test1(0).Height / 2)
+    .Left = (Pic_Arriba_Izq.Width / 2) - (comp_test1(0).Width / 2)
+End With
+
+With comp_test1(1)
+    .Top = (Pic_Abajo_Izq.Height / 2) - (comp_test1(1).Height / 2)
+    .Left = (Pic_Abajo_Izq.Width / 2) - (comp_test1(1).Width / 2)
+End With
+
+With comp_test1(2)
+    .Top = (Pic_Arriba_Der.Height / 2) - (comp_test1(2).Height / 2)
+    .Left = (Pic_Arriba_Der.Width / 2) - (comp_test1(2).Width / 2)
+End With
+
+With comp_test1(3)
+    .Top = (Pic_Abajo_Der.Height / 2) - (comp_test1(3).Height / 2)
+    .Left = (Pic_Abajo_Der.Width / 2) - (comp_test1(3).Width / 2)
 End With
 
 'posicionamiento de los covers
@@ -701,6 +814,12 @@ End Sub
 
 
 Public Sub Hide_All()
+comp_test1(0).Visible = False
+comp_test1(1).Visible = False
+comp_test1(2).Visible = False
+comp_test1(3).Visible = False
+Blanco.Visible = False
+Fixation.Visible = False
 Pic_Arriba_Izq.Visible = False
 Frame1.Visible = False
 Frame2.Visible = False
@@ -802,6 +921,13 @@ Private Sub Form_Unload(Cancel As Integer)
 REExcel.Quit
 End Sub
 
+
+Private Sub itt_Timer()
+Blanco.Visible = False
+itt.Enabled = False
+End Sub
+
+
 Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 Pic_Cover(Index).BackColor = &HFFFFFF
 componente(Index).Visible = True
@@ -872,7 +998,7 @@ CntPosI = 0
         Pos = 0
     End If
 Else
-    Pos = Rnd(0 - 1)
+    Pos = Int((2 * Rnd) + 1)
     If Pos = 1 Then
         CntPosD = CntPosD + 1
     Else
@@ -925,4 +1051,11 @@ End Sub
 Private Sub Timer_fixation_Timer()
     Fixation.Visible = False
     Timer_fixation.Enabled = False
+End Sub
+
+Sub Randomizar_4()
+    Pos = Int((4 * Rnd) + 1)
+
+
+
 End Sub
