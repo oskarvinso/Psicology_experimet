@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{6BF52A50-394A-11D3-B153-00C04F79FAA6}#1.0#0"; "wmp.dll"
 Begin VB.Form Form1 
    BackColor       =   &H00FFFFFF&
    BorderStyle     =   1  'Fixed Single
@@ -45,7 +46,7 @@ Begin VB.Form Form1
       Width           =   4695
       Begin VB.Timer itt 
          Enabled         =   0   'False
-         Interval        =   500
+         Interval        =   650
          Left            =   480
          Top             =   840
       End
@@ -73,6 +74,39 @@ Begin VB.Form Form1
       TabIndex        =   28
       Top             =   3960
       Width           =   2295
+      Begin WMPLibCtl.WindowsMediaPlayer wmp1 
+         Height          =   615
+         Left            =   1200
+         TabIndex        =   36
+         Top             =   1440
+         Visible         =   0   'False
+         Width           =   495
+         URL             =   ""
+         rate            =   1
+         balance         =   0
+         currentPosition =   0
+         defaultFrame    =   ""
+         playCount       =   1
+         autoStart       =   -1  'True
+         currentMarker   =   0
+         invokeURLs      =   -1  'True
+         baseURL         =   ""
+         volume          =   50
+         mute            =   0   'False
+         uiMode          =   "full"
+         stretchToFit    =   0   'False
+         windowlessVideo =   0   'False
+         enabled         =   -1  'True
+         enableContextMenu=   -1  'True
+         fullScreen      =   0   'False
+         SAMIStyle       =   ""
+         SAMILang        =   ""
+         SAMIFilename    =   ""
+         captioningID    =   ""
+         enableErrorDialogs=   0   'False
+         _cx             =   873
+         _cy             =   1085
+      End
       Begin VB.Image componente 
          Height          =   255
          Index           =   0
@@ -482,7 +516,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Private Declare Function Beep Lib "kernel32" (ByVal dwFreq As Long, ByVal dwDuration As Long) As Long
+'Private Declare Function Beep Lib "kernel32" (ByVal dwFreq As Long, ByVal dwDuration As Long) As Long
 Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String, Usr_Cod As String
 Public Created_ExlRegEve As Boolean
 Public Evento As String, Area As String
@@ -541,10 +575,10 @@ Blanco.Visible = True
 Randomizar
 
 If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
-    Beep 440, 500
+    wmp1.URL = "D:\Users\carolina\Desktop\Psicology_experimet-main\Psicology_experimet-main\Sounds\Correct.wav"
     Aciertos = Aciertos + 1
 Else
-    Beep 300, 500
+    wmp1.URL = "D:\Users\carolina\Desktop\Psicology_experimet-main\Psicology_experimet-main\Sounds\Wrong.wav"
     Aciertos = 0
 End If
 
