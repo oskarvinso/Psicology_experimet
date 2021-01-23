@@ -2,18 +2,65 @@ VERSION 5.00
 Object = "{6BF52A50-394A-11D3-B153-00C04F79FAA6}#1.0#0"; "wmp.dll"
 Begin VB.Form Form1 
    BackColor       =   &H00FFFFFF&
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   10515
-   ClientLeft      =   45
-   ClientTop       =   390
+   ClientLeft      =   0
+   ClientTop       =   0
    ClientWidth     =   17325
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   10515
    ScaleWidth      =   17325
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox AT2_D 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FFFFFF&
+      ForeColor       =   &H80000008&
+      Height          =   375
+      Left            =   840
+      ScaleHeight     =   345
+      ScaleWidth      =   465
+      TabIndex        =   38
+      Top             =   7080
+      Width           =   495
+      Begin VB.Image Comp_test2 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
+   End
+   Begin VB.PictureBox AT2_I 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      ForeColor       =   &H80000008&
+      Height          =   375
+      Left            =   240
+      ScaleHeight     =   345
+      ScaleWidth      =   345
+      TabIndex        =   37
+      Top             =   7080
+      Width           =   375
+      Begin VB.Image Comp_test2 
+         Height          =   255
+         Index           =   0
+         Left            =   120
+         Stretch         =   -1  'True
+         Top             =   120
+         Width           =   255
+      End
+   End
+   Begin VB.Timer Fixation_Test_1 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   4440
+      Top             =   7080
+   End
    Begin VB.PictureBox Blanco 
       Appearance      =   0  'Flat
       BackColor       =   &H80000005&
@@ -161,6 +208,7 @@ Begin VB.Form Form1
          Height          =   255
          Index           =   3
          Left            =   0
+         Stretch         =   -1  'True
          Top             =   0
          Width           =   255
       End
@@ -180,6 +228,7 @@ Begin VB.Form Form1
          Height          =   255
          Index           =   1
          Left            =   0
+         Stretch         =   -1  'True
          Top             =   0
          Width           =   255
       End
@@ -199,13 +248,14 @@ Begin VB.Form Form1
          Height          =   255
          Index           =   2
          Left            =   0
+         Stretch         =   -1  'True
          Top             =   0
          Width           =   255
       End
    End
    Begin VB.Frame Frame2 
       Appearance      =   0  'Flat
-      BackColor       =   &H0080C0FF&
+      BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   2535
@@ -455,6 +505,7 @@ Begin VB.Form Form1
          Height          =   255
          Index           =   0
          Left            =   360
+         Stretch         =   -1  'True
          Top             =   600
          Width           =   255
       End
@@ -526,6 +577,8 @@ Public Pos As Integer
 Dim Component_Pos(3) As String
 Public Aciertos As Integer
 Public Triangulo As String, Cuadrado As String, Rojo As String, Verde As String
+Dim Pos_4(3) As String
+Public clicks As Integer
 
 
 
@@ -547,38 +600,59 @@ End Sub
 
 
 Public Sub Test_1()
-
-Hide_All
+Fixation.Visible = False
+Randomizar_4
 
 Pic_Arriba_Izq.Visible = True
 Pic_Arriba_Der.Visible = True
 Pic_Abajo_Izq.Visible = True
 Pic_Abajo_Der.Visible = True
-
+comp_test1(0).Visible = True
+comp_test1(1).Visible = True
+comp_test1(2).Visible = True
+comp_test1(3).Visible = True
 
 End Sub
 
+Public Sub test_2()
+Randomizar
+Mostrar_Test2
 
+AT2_I.Visible = True
+AT2_D.Visible = True
+Comp_test2(0).Visible = True
+Comp_test2(1).Visible = True
+
+
+End Sub
 
 Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Muestra_Covers
 End Sub
 
+Private Sub comp_test1_Click(Index As Integer)
+    If clicks = 12 Then
+        test_2
+    Else
+        Randomizar_4
+    End If
+End Sub
+
 Private Sub componente_Click(Index As Integer)
 If Aciertos = 12 Then
-    
-    Test_1
-  
+    Hide_All
+    Fixation.Visible = True
+    Fixation_Test_1.Enabled = True
 Else
 'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
 Blanco.Visible = True
 Randomizar
 
 If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
-    wmp1.URL = "D:\Users\carolina\Desktop\Psicology_experimet-main\Psicology_experimet-main\Sounds\Correct.wav"
+    wmp1.URL = App.Path & "\Sounds\Correct.wav"
     Aciertos = Aciertos + 1
 Else
-    wmp1.URL = "D:\Users\carolina\Desktop\Psicology_experimet-main\Psicology_experimet-main\Sounds\Wrong.wav"
+    wmp1.URL = App.Path & "\Sounds\Wrong.wav"
     Aciertos = 0
 End If
 
@@ -588,6 +662,11 @@ itt.Enabled = True
 End If
 End Sub
 
+
+Private Sub Fixation_Test_1_Timer()
+Fixation_Test_1.Enabled = False
+Test_1
+End Sub
 
 Private Sub Form_Load()
 Iniciar
@@ -710,6 +789,31 @@ With Pic_R
     .Top = Screen.Height / 4 - Pic_R.Height / 2
 End With
 
+'posicionamiento de componentes del test 2
+With Comp_test2(0)
+    .Top = (AT2_I.Height / 2) - (Comp_test2(0).Height / 2)
+    .Left = (AT2_I.Width / 2) - (Comp_test2(0).Width / 2)
+End With
+With Comp_test2(1)
+    .Top = (AT2_D.Height / 2) - (Comp_test2(1).Height / 2)
+    .Left = (AT2_D.Width / 2) - (Comp_test2(1).Width / 2)
+End With
+'posicionamiento componentes test 1
+
+With Pic_Arriba_Izq
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Arriba_Izq.Height
+    .Left = Screen.Width / 4 - Pic_Arriba_Izq.Width / 2
+    .Top = Screen.Height / 4 - Pic_Arriba_Izq.Height / 2
+End With
+
+With Pic_Arriba_Der
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = Pic_Arriba_Der.Height
+    .Left = ((Screen.Width / 4) * 3) - Pic_Arriba_Der.Width / 2
+    .Top = Screen.Height / 4 - Pic_Arriba_Der.Height / 2
+End With
+
 With Pic_Abajo_Izq
     .Height = (Screen.Height / 2) - (Screen.Height / 8)
     .Width = Pic_Abajo_Izq.Height
@@ -724,7 +828,6 @@ With Pic_Abajo_Der
     .Top = ((Screen.Height / 4) * 3) - Pic_Abajo_Der.Height / 2
 End With
 
-'posicionamiento componentes test 1
 With comp_test1(0)
     .Top = (Pic_Arriba_Izq.Height / 2) - (comp_test1(0).Height / 2)
     .Left = (Pic_Arriba_Izq.Width / 2) - (comp_test1(0).Width / 2)
@@ -744,6 +847,22 @@ With comp_test1(3)
     .Top = (Pic_Abajo_Der.Height / 2) - (comp_test1(3).Height / 2)
     .Left = (Pic_Abajo_Der.Width / 2) - (comp_test1(3).Width / 2)
 End With
+
+'posicionamiento areas presentación test 2
+With AT2_I
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = AT2_I.Height
+    .Left = Screen.Width / 4 - AT2_I.Width / 2
+    .Top = Screen.Height / 4 - AT2_I.Height / 2
+End With
+
+With AT2_D
+    .Height = (Screen.Height / 2) - (Screen.Height / 8)
+    .Width = AT2_D.Height
+    .Left = ((Screen.Width / 4) * 3) - AT2_D.Width / 2
+    .Top = Screen.Height / 4 - AT2_D.Height / 2
+End With
+
 
 'posicionamiento de los covers
 With Pic_Cover(0)
@@ -871,6 +990,11 @@ componente(0).Visible = False
 componente(1).Visible = False
 componente(2).Visible = False
 componente(3).Visible = False
+AT2_I.Visible = False
+AT2_D.Visible = False
+Comp_test2(0).Visible = False
+Comp_test2(1).Visible = False
+
 End Sub
 
 Public Sub Reg_Usr()
@@ -1022,17 +1146,28 @@ Sub Randomizar()
 
 Dim CntPosI As Integer
 Dim CntPosD As Integer
+Dim Random As Integer
+
+Random = Right(Format(Time, "hh:mm:ss"), 1)
+Random = Right(Random * Int(Right(Rnd, 1)), 1)
+
+If Random Mod 2 = 0 Then
+    Random = 2
+Else
+    Random = 1
+End If
+
 
 If CntPosI Or CntPosD = 3 Then
     CntPosD = 0
-CntPosI = 0
+    CntPosI = 0
     If Pos = 0 Then
         Pos = 1
     Else
         Pos = 0
     End If
 Else
-    Pos = Int((2 * Rnd) + 1)
+    Pos = Random
     If Pos = 1 Then
         CntPosD = CntPosD + 1
     Else
@@ -1079,7 +1214,28 @@ Else
     componente(3).Visible = True
     Component_Pos(3) = "rojo"
 End If
+End Sub
 
+Sub Mostrar_Test2()
+
+If Pos = 1 Then
+    Comp_test2(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+    Comp_test2(0).Visible = True
+    Component_Pos(0) = "triangulo"
+
+    Comp_test2(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+    Comp_test2(1).Visible = True
+    Component_Pos(1) = "cuadrado"
+Else
+    Comp_test2(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+    Comp_test2(1).Visible = True
+    Component_Pos(1) = "triangulo"
+
+    Comp_test2(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+    Comp_test2(0).Visible = True
+    Component_Pos(0) = "cuadrado"
+    End If
+    
 End Sub
 
 Private Sub Timer_fixation_Timer()
@@ -1088,8 +1244,52 @@ Private Sub Timer_fixation_Timer()
 End Sub
 
 Sub Randomizar_4()
-    Pos = Int((4 * Rnd) + 1)
+   
+Dim ActualPos As Integer
+Dim Figura As String
+Dim Random As String
+Dim Ya_Trian As Boolean, Ya_Cuad As Boolean, Ya_Rojo As Boolean, Ya_Verde As Boolean
+ActualPos = 0
 
-
-
+While ActualPos < 4
+        
+        Random = Right(Format(Time, "hh:mm:ss"), 1)
+        Random = Right(Random * Int(Right(Rnd, 1)), 1)
+        If Random = 0 Or Random = 2 Then
+            If Ya_Trian = False Then
+                Figura = "Triangulo"
+                Ya_Trian = True
+                Pos_4(ActualPos) = Figura
+                comp_test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+                ActualPos = ActualPos + 1
+            End If
+        End If
+        If Random = 1 Or Random = 3 Or Random = 8 Then
+            If Ya_Cuad = False Then
+                Figura = "Cuadrado"
+                Ya_Cuad = True
+                Pos_4(ActualPos) = Figura
+                comp_test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+                ActualPos = ActualPos + 1
+            End If
+        End If
+        If Random = 4 Or Random = 6 Or Random = 9 Then
+            If Ya_Rojo = False Then
+                Figura = "Rojo"
+                Ya_Rojo = True
+                Pos_4(ActualPos) = Figura
+                comp_test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+                ActualPos = ActualPos + 1
+            End If
+        End If
+        If Random = 5 Or Random = 7 Then
+            If Ya_Verde = False Then
+                Figura = "Verde"
+                Ya_Verde = True
+                Pos_4(ActualPos) = Figura
+                comp_test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+                ActualPos = ActualPos + 1
+            End If
+        End If
+Wend
 End Sub
