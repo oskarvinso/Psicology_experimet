@@ -15,6 +15,20 @@ Begin VB.Form Form1
    ScaleWidth      =   17325
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox Blanco 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FFFFFF&
+      FillColor       =   &H00808080&
+      FillStyle       =   0  'Solid
+      ForeColor       =   &H80000008&
+      Height          =   1215
+      Left            =   11880
+      ScaleHeight     =   1185
+      ScaleWidth      =   1185
+      TabIndex        =   35
+      Top             =   5640
+      Width           =   1215
+   End
    Begin VB.PictureBox Fixation 
       Appearance      =   0  'Flat
       BackColor       =   &H80000005&
@@ -46,18 +60,6 @@ Begin VB.Form Form1
          Y2              =   1440
       End
    End
-   Begin VB.PictureBox Blanco 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000005&
-      ForeColor       =   &H80000008&
-      Height          =   1215
-      Left            =   11880
-      ScaleHeight     =   1185
-      ScaleWidth      =   1185
-      TabIndex        =   35
-      Top             =   5640
-      Width           =   1215
-   End
    Begin VB.PictureBox AT2_D 
       Appearance      =   0  'Flat
       BackColor       =   &H00FFFFFF&
@@ -65,14 +67,38 @@ Begin VB.Form Form1
       Height          =   975
       Left            =   1080
       ScaleHeight     =   945
-      ScaleWidth      =   1065
+      ScaleWidth      =   945
       TabIndex        =   38
       Top             =   6720
-      Width           =   1095
+      Width           =   975
+      Begin VB.Image Comp_Test6 
+         Height          =   510
+         Index           =   1
+         Left            =   360
+         Stretch         =   -1  'True
+         Top             =   360
+         Width           =   510
+      End
+      Begin VB.Image Comp_Test5 
+         Height          =   255
+         Index           =   1
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   360
+         Width           =   255
+      End
+      Begin VB.Image Comp_Test4 
+         Height          =   255
+         Index           =   1
+         Left            =   720
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Image Comp_Test3 
          Height          =   255
          Index           =   1
-         Left            =   600
+         Left            =   360
          Stretch         =   -1  'True
          Top             =   0
          Width           =   255
@@ -97,10 +123,34 @@ Begin VB.Form Form1
       TabIndex        =   37
       Top             =   6720
       Width           =   975
+      Begin VB.Image Comp_Test6 
+         Height          =   510
+         Index           =   0
+         Left            =   360
+         Stretch         =   -1  'True
+         Top             =   360
+         Width           =   510
+      End
+      Begin VB.Image Comp_Test5 
+         Height          =   255
+         Index           =   0
+         Left            =   0
+         Stretch         =   -1  'True
+         Top             =   360
+         Width           =   255
+      End
+      Begin VB.Image Comp_Test4 
+         Height          =   255
+         Index           =   0
+         Left            =   720
+         Stretch         =   -1  'True
+         Top             =   0
+         Width           =   255
+      End
       Begin VB.Image Comp_Test3 
          Height          =   255
          Index           =   0
-         Left            =   480
+         Left            =   360
          Stretch         =   -1  'True
          Top             =   0
          Width           =   255
@@ -591,11 +641,16 @@ Public REExcel As Object, REBook As Object, RESheet As Object, REruta As String
 Public Pos As Integer
 Public Clicks As Integer
 Public Aciertos As Integer
-Public Triangulo As String, Cuadrado As String, Rojo As String, Verde As String
+Public Triangulo As String, Cuadrado As String, Rojo As String, Verde As String, Triangulo_Verde As String, Cuadrado_Rojo As String
 Public CntPosI As Integer, CntPosD As Integer
+Public Click_Counter As Integer
 Dim Pos_4(3) As String
 Dim Component_Pos(3) As String
-Dim Component_2Pos(1) As String      'evaluating
+Dim Component_2Pos(1) As String
+Dim EntrenamientoF2 As Boolean
+Dim Instancia As String
+Dim NoHaRegistrado As Boolean
+Dim Comp_Test1_Pos(3) As String
 
 
 
@@ -731,6 +786,143 @@ Sub Mostrar_Test3()
     End If
 End Sub
 
+Sub Mostrar_Test4()
+    If Pos = 1 Then
+        Comp_Test4(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test4(0).Visible = True
+        Component_2Pos(0) = "rojo"
+
+        Comp_Test4(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test4(1).Visible = True
+        Component_2Pos(1) = "cuadrado"
+    Else
+        Comp_Test4(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test4(1).Visible = True
+        Component_2Pos(1) = "rojo"
+
+        Comp_Test4(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test4(0).Visible = True
+        Component_2Pos(0) = "cuadrado"
+    End If
+End Sub
+
+Sub Mostrar_Test5()
+    If Pos = 1 Then
+        Comp_Test5(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test5(0).Visible = True
+        Component_2Pos(0) = "rojo"
+
+        Comp_Test5(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test5(1).Visible = True
+        Component_2Pos(1) = "verde"
+    Else
+        Comp_Test5(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test5(1).Visible = True
+        Component_2Pos(1) = "rojo"
+
+        Comp_Test5(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test5(0).Visible = True
+        Component_2Pos(0) = "verde"
+    End If
+End Sub
+
+Sub Mostrar_Test6()
+    If Pos = 1 Then
+        Comp_Test6(0).Picture = LoadPicture(App.Path & "\data\img\triangulo_verde.jpg")
+        Comp_Test6(0).Visible = True
+        Component_2Pos(0) = "triangulo_verde"
+
+        Comp_Test6(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado_rojo.jpg")
+        Comp_Test6(1).Visible = True
+        Component_2Pos(1) = "cuadrado_rojo"
+    Else
+        Comp_Test6(1).Picture = LoadPicture(App.Path & "\data\img\triangulo_verde.jpg")
+        Comp_Test6(1).Visible = True
+        Component_2Pos(1) = "triangulo_verde"
+
+        Comp_Test6(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado_rojo.jpg")
+        Comp_Test6(0).Visible = True
+        Component_2Pos(0) = "cuadrado_rojo"
+    End If
+End Sub
+
+Sub Mostrar_Test1()
+    Select Case Click_Counter
+    Case 0
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(0) = "cuadrado"
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(1) = "rojo"
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(2) = "triangulo"
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(3) = "verde"
+    Case 1
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(0) = "rojo"
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(1) = "cuadrado"
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+    Case 2
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+   Case 3
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+   Case 4
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+   Case 5
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+   Case 6
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+   Case 7
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+   Case 8
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+   Case 9
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+   Case 10
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+   Case 11
+        Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+    End Select
+    Click_Counter = Click_Counter + 1
+End Sub
+
+
+
+
+
+
 Sub Randomizar_4()
     Dim ActualPos As Integer
     Dim Figura As String
@@ -787,6 +979,10 @@ End Sub
 
 
 Private Sub Componente_Click(Index As Integer)
+    Evento = "Click"
+    Area = Component_Pos(Index)
+    Reg_Event
+If EntrenamientoF2 = False Then
     If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
         wmp1.URL = App.Path & "\Sounds\Correct.wav"
         Aciertos = Aciertos + 1
@@ -794,24 +990,46 @@ Private Sub Componente_Click(Index As Integer)
         wmp1.URL = App.Path & "\Sounds\Wrong.wav"
         Aciertos = 0
     End If
-            
+    If Aciertos = 12 Then           'lo puse abajo en vez de de primeras y parece haber mejorado el conteo de 12, antes eran 13.
+        Instancia = "Test 1"
+        Fixation.Visible = True
+        Hide_All
+        Test_1
+        Fixation_Test.Enabled = True
+    Else
+        Blanco.Visible = True       'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
+        Randomizar
+        Mostrar
+        itt.Enabled = True
+    End If
+Else
+    If Component_Pos(Index) = "cuadrado" Or Component_Pos(Index) = "verde" Then
+        wmp1.URL = App.Path & "\Sounds\correct.wav"
+        Aciertos = Aciertos + 1
+    Else
+        wmp1.URL = App.Path & "\Sounds\wrong.wav"
+        Aciertos = 0
+    End If
     If Aciertos = 12 Then           'lo puse abajo en vez de de primeras y parece haber mejorado el conteo de 12, antes eran 13.
         Fixation.Visible = True
         Hide_All
         Test_1
         Fixation_Test.Enabled = True
     Else
-        'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
-        Blanco.Visible = True
+        Blanco.Visible = True       'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
         Randomizar
-                
         Mostrar
         itt.Enabled = True
     End If
+End If
 End Sub
 
 Private Sub Comp_Test1_Click(Index As Integer)
+    Evento = "Click"
+    Area = Index
+    Reg_Event
     If Clicks = 11 Then
+        Instancia = "Test 2"
         Clicks = 0
         Fixation.Visible = True     'telón que se cierra
         Hide_All
@@ -819,15 +1037,18 @@ Private Sub Comp_Test1_Click(Index As Integer)
         Fixation_Test.Enabled = True
     Else
         Blanco.Visible = True
-        Randomizar_4
-        Mostrar
+        Mostrar_Test1
         itt.Enabled = True
         Clicks = Clicks + 1
     End If
 End Sub
 
 Private Sub Comp_test2_Click(Index As Integer)
+    Evento = "Click"
+    Area = Comp_Test2(Index)
+    Reg_Event
     If Clicks = 11 Then
+        Instancia = "Test 3"
         Clicks = 0
         Fixation.Visible = True
         Hide_All
@@ -843,18 +1064,81 @@ Private Sub Comp_test2_Click(Index As Integer)
 End Sub
 
 Private Sub Comp_Test3_Click(Index As Integer)
+    Evento = "Click"
+    Area = Comp_Test3(Index)
+    Reg_Event
+    If Clicks = 11 Then
+        Instancia = "Test 4"
+        Clicks = 0
+        Fixation.Visible = True
+        Hide_All
+        Test_4
+        Fixation_Test.Enabled = True
+    Else
+        Clicks = Clicks + 1
+        Blanco.Visible = True       'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
+        Randomizar
+        Mostrar_Test3
+        itt.Enabled = True
+    End If
+End Sub
+
+Private Sub Comp_Test4_Click(Index As Integer)
+    Evento = "Click"
+    Area = Comp_Test4(Index)
+    Reg_Event
+    If Clicks = 11 Then
+        Instancia = "Test 5"
+        Clicks = 0
+        Fixation.Visible = True
+        Hide_All
+        Test_5
+        Fixation_Test.Enabled = True
+    Else
+        Clicks = Clicks + 1
+        Blanco.Visible = True       'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
+        Randomizar
+        Mostrar_Test4
+        itt.Enabled = True
+    End If
+End Sub
+
+Private Sub Comp_Test5_Click(Index As Integer)
+    Evento = "Click"
+    Area = Comp_Test5(Index)
+    Reg_Event
+    If Clicks = 11 Then
+        Instancia = "Test 6"
+        Clicks = 0
+        Fixation.Visible = True
+        Hide_All
+        Test_6
+        Fixation_Test.Enabled = True
+    Else
+        Clicks = Clicks + 1
+        Blanco.Visible = True
+        Randomizar
+        Mostrar_Test5
+        itt.Enabled = True
+    End If
+End Sub
+
+Private Sub Comp_Test6_Click(Index As Integer)
+    Evento = "Click"
+    Area = Comp_Test6(Index)
+    Reg_Event
     If Clicks = 11 Then
         Clicks = 0
         Fixation.Visible = True
         Hide_All
-        'Test_4
+        EntrenamientoF2 = True
+        Fase1
         Fixation_Test.Enabled = True
     Else
-        'oculta todo, suena el pito durante 0.5 segundos, e inicia el siguiente ensayo.
+        Clicks = Clicks + 1
         Blanco.Visible = True
         Randomizar
-                
-        Mostrar_Test3
+        Mostrar_Test6
         itt.Enabled = True
     End If
 End Sub
@@ -868,6 +1152,7 @@ Private Sub Command2_Click() ' Este es el boton de acepto y entiendo el concenti
     Hide_All
     'inicia fase 1 del experimento
     Fase1
+    Instancia = "EntrenamientoF1"
 End Sub
 
 Private Sub Command3_Click() ' este es el boton de no acepto y salir
@@ -900,8 +1185,35 @@ Private Sub Form_Load()
     Frame1.Visible = True
 End Sub
 
+Private Sub Componente_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+If Instancia = "EntrenamientoF1" Then
+    If NoHaRegistrado = False Then
+        Evento = "Miró"
+        Area = Component_Pos(Index)
+        Reg_Event
+        NoHaRegistrado = True
+    End If
+End If
+End Sub
+
 Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Muestra_Covers
+    If NoHaRegistrado = True Then
+    Evento = "Salio a "
+    Area = "Blanco"
+    Reg_Event
+    NoHaRegistrado = False
+    End If
+End Sub
+
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Muestra_Covers
+    If NoHaRegistrado = True Then
+    Evento = "Salio a "
+    Area = "Fondo"
+    Reg_Event
+    NoHaRegistrado = False
+    End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -921,38 +1233,27 @@ End Sub
 Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Pic_Cover(Index).BackColor = &HFFFFFF
     Componente(Index).Visible = True
-        If Area <> ("Cover " & Index) Then
-            Evento = "Mouse over"
-            Area = ("Cover " & Index)
-            Reg_Event
-        End If
 End Sub
 
 Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Muestra_Covers
-        If Area <> "Estimulo de la izquierda" Then
-            Evento = "Mouse over"
-            Area = "Estimulo de la izquierda"
-            Reg_Event
-        End If
+    If NoHaRegistrado = True Then
+    Evento = "Salio a "
+    Area = "Area izquierda"
+    Reg_Event
+    NoHaRegistrado = False
+    End If
 End Sub
 
 Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Muestra_Covers
-        If Area <> "Estimulo de la derecha" Then
-            Evento = "Mouse over"
-            Area = "Estimulo de la derecha"
-            Reg_Event
-        End If
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Muestra_Covers
-        If Area <> "Fondo" Then
-            Evento = "Mouse over"
-            Area = "Fondo"
-            Reg_Event
-        End If
+    If NoHaRegistrado = True Then
+    Evento = "Salio a "
+    Area = "Area derecha"
+    Reg_Event
+    NoHaRegistrado = False
+    End If
+    
 End Sub
 
 Private Sub Timer_fixation_Timer()
@@ -995,9 +1296,30 @@ Public Sub Test_2()
     AT2_D.Visible = True
 End Sub
 
-Public Sub Test_3()     'evaluating
+Public Sub Test_3()
     Randomizar
     Mostrar_Test3
+    AT2_I.Visible = True
+    AT2_D.Visible = True
+End Sub
+
+Public Sub Test_4()
+    Randomizar
+    Mostrar_Test4
+    AT2_I.Visible = True
+    AT2_D.Visible = True
+End Sub
+
+Public Sub Test_5()
+    Randomizar
+    Mostrar_Test5
+    AT2_I.Visible = True
+    AT2_D.Visible = True
+End Sub
+
+Public Sub Test_6()
+    Randomizar
+    Mostrar_Test6
     AT2_I.Visible = True
     AT2_D.Visible = True
 End Sub
@@ -1009,6 +1331,8 @@ Public Sub Iniciar()
     Cuadrado = (App.Path & "\data\img\cuadrado.jpg")
     Rojo = (App.Path & "\data\img\rojo.jpg")
     Verde = (App.Path & "\data\img\verde.jpg")
+    Triangulo_Verde = (App.Path & "\data\img\triangulo_verde.jpg")
+    Cuadrado_Rojo = (App.Path & "\data\img\cuadrado_rojo.jpg")
 
         'Acomoda la ventana y los formularios
     With Form1
@@ -1115,7 +1439,7 @@ Public Sub Iniciar()
         .Top = Screen.Height / 4 - Pic_R.Height / 2
     End With
     
-        'posicionamiento de los Componentes y covers (¿entrenamiento?)
+        'posicionamiento de los Componentes y covers del entrenamiento
     With Componente(0)
         .Left = Pic_L.Width / 2 - (Componente(0).Width / 2)
         .Top = 100
@@ -1235,6 +1559,72 @@ Public Sub Iniciar()
         .Left = (AT2_D.Width / 2) - (Comp_Test3(1).Width / 2)
     End With
     
+        'posicionamiento areas presentación y componentes del test 4
+    With AT2_I
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_I.Height
+        .Left = Screen.Width / 4 - AT2_I.Width / 2
+        .Top = Screen.Height / 4 - AT2_I.Height / 2
+    End With
+    With AT2_D
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_D.Height
+        .Left = ((Screen.Width / 4) * 3) - AT2_D.Width / 2
+        .Top = Screen.Height / 4 - AT2_D.Height / 2
+    End With
+    With Comp_Test4(0)
+        .Top = (AT2_I.Height / 2) - (Comp_Test4(0).Height / 2)
+        .Left = (AT2_I.Width / 2) - (Comp_Test4(0).Width / 2)
+    End With
+    With Comp_Test4(1)
+        .Top = (AT2_D.Height / 2) - (Comp_Test4(1).Height / 2)
+        .Left = (AT2_D.Width / 2) - (Comp_Test4(1).Width / 2)
+    End With
+    
+        'posicionamiento areas presentación y componentes del test 5
+    With AT2_I
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_I.Height
+        .Left = Screen.Width / 4 - AT2_I.Width / 2
+        .Top = Screen.Height / 4 - AT2_I.Height / 2
+    End With
+    With AT2_D
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_D.Height
+        .Left = ((Screen.Width / 4) * 3) - AT2_D.Width / 2
+        .Top = Screen.Height / 4 - AT2_D.Height / 2
+    End With
+    With Comp_Test5(0)
+        .Top = (AT2_I.Height / 2) - (Comp_Test5(0).Height / 2)
+        .Left = (AT2_I.Width / 2) - (Comp_Test5(0).Width / 2)
+    End With
+    With Comp_Test5(1)
+        .Top = (AT2_D.Height / 2) - (Comp_Test5(1).Height / 2)
+        .Left = (AT2_D.Width / 2) - (Comp_Test5(1).Width / 2)
+    End With
+    
+        'posicionamiento areas presentación y componentes del test 5
+    With AT2_I
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_I.Height
+        .Left = Screen.Width / 4 - AT2_I.Width / 2
+        .Top = Screen.Height / 4 - AT2_I.Height / 2
+    End With
+    With AT2_D
+        .Height = (Screen.Height / 2) - (Screen.Height / 8)
+        .Width = AT2_D.Height
+        .Left = ((Screen.Width / 4) * 3) - AT2_D.Width / 2
+        .Top = Screen.Height / 4 - AT2_D.Height / 2
+    End With
+    With Comp_Test6(0)
+        .Top = (AT2_I.Height / 2) - (Comp_Test6(0).Height / 2)
+        .Left = (AT2_I.Width / 2) - (Comp_Test6(0).Width / 2)
+    End With
+    With Comp_Test6(1)
+        .Top = (AT2_D.Height / 2) - (Comp_Test6(1).Height / 2)
+        .Left = (AT2_D.Width / 2) - (Comp_Test6(1).Width / 2)
+    End With
+    
         'carga los años del formulario
     Dim yi As Integer, yf As Integer, i As Integer
     yi = Right(Date, 4)
@@ -1252,19 +1642,17 @@ Public Sub Iniciar()
 End Sub
 
 Public Sub Hide_All()
-    Comp_Test1(0).Visible = False
-    Comp_Test1(1).Visible = False
-    Comp_Test1(2).Visible = False
-    Comp_Test1(3).Visible = False
     Blanco.Visible = False
     Frame1.Visible = False
     Frame2.Visible = False
+    Pic_L.Visible = False
+    Pic_R.Visible = False
+    AT2_I.Visible = False
+    AT2_D.Visible = False
     Pic_Arriba_Izq.Visible = False
     Pic_Abajo_Izq.Visible = False
     Pic_Arriba_Der.Visible = False
     Pic_Abajo_Der.Visible = False
-    Pic_L.Visible = False
-    Pic_R.Visible = False
     Pic_Cover(0).Visible = False
     Pic_Cover(1).Visible = False
     Pic_Cover(2).Visible = False
@@ -1273,12 +1661,20 @@ Public Sub Hide_All()
     Componente(1).Visible = False
     Componente(2).Visible = False
     Componente(3).Visible = False
-    AT2_I.Visible = False
-    AT2_D.Visible = False
+    Comp_Test1(0).Visible = False
+    Comp_Test1(1).Visible = False
+    Comp_Test1(2).Visible = False
+    Comp_Test1(3).Visible = False
     Comp_Test2(0).Visible = False
     Comp_Test2(1).Visible = False
     Comp_Test3(0).Visible = False
     Comp_Test3(1).Visible = False
+    Comp_Test4(0).Visible = False
+    Comp_Test4(1).Visible = False
+    Comp_Test5(0).Visible = False
+    Comp_Test5(1).Visible = False
+    Comp_Test6(0).Visible = False
+    Comp_Test6(1).Visible = False
 End Sub
 
 Public Sub Reg_Usr()
@@ -1335,6 +1731,7 @@ Public Sub Reg_Event()
         RESheet.range("B1").Value = "HORA"
         RESheet.range("C1").Value = "EVENTO"
         RESheet.range("D1").Value = "AREA"
+        RESheet.range("E1").Value = "INSTANCIA"
         REBook.SaveAs REruta
         Created_ExlRegEve = True
     End If
@@ -1342,9 +1739,10 @@ Public Sub Reg_Event()
         'Agrega registro
     With RESheet
         .range("A" & IndxReg).Value = Date
-        .range("B" & IndxReg).Value = Time
+        .range("B" & IndxReg).Value = Format(Time, "hh:nn:ss") & "." & Right(Format(Timer, "#0.000"), 3)
         .range("C" & IndxReg).Value = Evento
         .range("D" & IndxReg).Value = Area
+        .range("E" & IndxReg).Value = Instancia
     End With
 
     'Guardar el excel y cerrarlo
