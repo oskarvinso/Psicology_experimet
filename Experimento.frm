@@ -651,6 +651,7 @@ Dim EntrenamientoF2 As Boolean
 Dim Instancia As String
 Dim NoHaRegistrado As Boolean
 Dim Comp_Test1_Pos(3) As String
+Dim Reversion As Integer
 
 
 
@@ -863,57 +864,99 @@ Sub Mostrar_Test1()
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
         Comp_Test1_Pos(1) = "cuadrado"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(2) = "verde"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(3) = "triangulo"
     Case 2
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(0) = "triangulo"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(1) = "cuadrado"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(2) = "rojo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(3) = "verde"
    Case 3
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(0) = "verde"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(1) = "cuadrado"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(2) = "triangulo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(3) = "rojo"
    Case 4
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(0) = "cuadrado"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(1) = "triangulo"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(2) = "rojo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(3) = "verde"
    Case 5
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(0) = "rojo"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(1) = "triangulo"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(2) = "verde"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(3) = "cuadrado"
    Case 6
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(0) = "triangulo"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(1) = "rojo"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(2) = "cuadrado"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(3) = "verde"
    Case 7
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(0) = "verde"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(1) = "rojo"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(2) = "triangulo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(3) = "cuadrado"
    Case 8
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(0) = "cuadrado"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(1) = "verde"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(2) = "rojo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(3) = "triangulo"
    Case 9
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(0) = "rojo"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(1) = "verde"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(2) = "triangulo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(3) = "cuadrado"
    Case 10
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(0) = "triangulo"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(1) = "verde"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(2) = "cuadrado"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(3) = "rojo"
    Case 11
         Comp_Test1(0).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+        Comp_Test1_Pos(0) = "verde"
         Comp_Test1(1).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+        Comp_Test1_Pos(1) = "triangulo"
         Comp_Test1(2).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+        Comp_Test1_Pos(2) = "rojo"
         Comp_Test1(3).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+        Comp_Test1_Pos(3) = "cuadrado"
     End Select
     Click_Counter = Click_Counter + 1
 End Sub
@@ -983,6 +1026,7 @@ Private Sub Componente_Click(Index As Integer)
     Area = Component_Pos(Index)
     Reg_Event
 If EntrenamientoF2 = False Then
+    Instancia = "EntrenamientoF1"
     If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
         wmp1.URL = App.Path & "\Sounds\Correct.wav"
         Aciertos = Aciertos + 1
@@ -991,6 +1035,7 @@ If EntrenamientoF2 = False Then
         Aciertos = 0
     End If
     If Aciertos = 12 Then           'lo puse abajo en vez de de primeras y parece haber mejorado el conteo de 12, antes eran 13.
+        Aciertos = 0
         Instancia = "Test 1"
         Fixation.Visible = True
         Hide_All
@@ -1012,6 +1057,9 @@ Else
     End If
     If Aciertos = 12 Then           'lo puse abajo en vez de de primeras y parece haber mejorado el conteo de 12, antes eran 13.
         Fixation.Visible = True
+        Aciertos = 0
+        Instancia = "Test 1"
+        Click_Counter = 0
         Hide_All
         Test_1
         Fixation_Test.Enabled = True
@@ -1026,7 +1074,7 @@ End Sub
 
 Private Sub Comp_Test1_Click(Index As Integer)
     Evento = "Click"
-    Area = Index
+    Area = Comp_Test1_Pos(Index)
     Reg_Event
     If Clicks = 11 Then
         Instancia = "Test 2"
@@ -1037,15 +1085,16 @@ Private Sub Comp_Test1_Click(Index As Integer)
         Fixation_Test.Enabled = True
     Else
         Blanco.Visible = True
-        Mostrar_Test1
         itt.Enabled = True
+        Mostrar_Test1
         Clicks = Clicks + 1
     End If
+
 End Sub
 
 Private Sub Comp_test2_Click(Index As Integer)
     Evento = "Click"
-    Area = Comp_Test2(Index)
+    Area = Component_2Pos(Index)
     Reg_Event
     If Clicks = 11 Then
         Instancia = "Test 3"
@@ -1065,7 +1114,7 @@ End Sub
 
 Private Sub Comp_Test3_Click(Index As Integer)
     Evento = "Click"
-    Area = Comp_Test3(Index)
+    Area = Component_2Pos(Index)
     Reg_Event
     If Clicks = 11 Then
         Instancia = "Test 4"
@@ -1085,7 +1134,7 @@ End Sub
 
 Private Sub Comp_Test4_Click(Index As Integer)
     Evento = "Click"
-    Area = Comp_Test4(Index)
+    Area = Component_2Pos(Index)
     Reg_Event
     If Clicks = 11 Then
         Instancia = "Test 5"
@@ -1105,7 +1154,7 @@ End Sub
 
 Private Sub Comp_Test5_Click(Index As Integer)
     Evento = "Click"
-    Area = Comp_Test5(Index)
+    Area = Component_2Pos(Index)
     Reg_Event
     If Clicks = 11 Then
         Instancia = "Test 6"
@@ -1125,10 +1174,17 @@ End Sub
 
 Private Sub Comp_Test6_Click(Index As Integer)
     Evento = "Click"
-    Area = Comp_Test6(Index)
+    Area = Component_2Pos(Index)
     Reg_Event
     If Clicks = 11 Then
+        If Reversion >= 1 Then
+            MsgBox "El experimento ha terminado, ¡muchas gracias por tu participación!"
+            REExcel.Quit
+            End
+        End If
+        Instancia = "EntrenamientoF2"
         Clicks = 0
+        Reversion = Reversion + 1
         Fixation.Visible = True
         Hide_All
         EntrenamientoF2 = True
@@ -1278,7 +1334,7 @@ Public Sub Fase1()
 End Sub
 
 Public Sub Test_1()
-    Randomizar_4
+    Mostrar_Test1
     Pic_Arriba_Izq.Visible = True
     Pic_Arriba_Der.Visible = True
     Pic_Abajo_Izq.Visible = True
