@@ -655,6 +655,7 @@ Dim Reversion As Integer
 
 
 
+
 Sub Oculta_Covers()
     Dim i As Integer
         While i < Pic_Cover.Count
@@ -1398,8 +1399,8 @@ Public Sub Iniciar()
         .Top = 0
     End With
     With Frame1
-        .Height = Screen.Height
-        .Width = Screen.Width
+        '.Height = Screen.Height
+        '.Width = Screen.Width
         .Left = Form1.Width / 2 - Frame1.Width / 2
         .Top = Form1.Height / 2 - Frame1.Height / 2
     End With
