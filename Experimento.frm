@@ -633,7 +633,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String, Usr_Cod As String
+Public Usr_Name As String, Usr_Age As Integer, Usr_Gender As String, Usr_Id As String, Usr_IdCity As String, Usr_Cod As String, Fase As Integer
 Public Created_ExlRegEve As Boolean
 Public Evento As String, Area As String
 Public IndxReg As Integer
@@ -648,7 +648,7 @@ Dim Pos_4(3) As String
 Dim Component_Pos(3) As String
 Dim Component_2Pos(1) As String
 Dim EntrenamientoF2 As Boolean
-Dim Instancia As String
+Dim Instancia As String, Participante As String, Duracion As String
 Dim NoHaRegistrado As Boolean
 Dim Comp_Test1_Pos(3) As String
 Dim Reversion As Integer
@@ -967,54 +967,54 @@ End Sub
 
 
 
-Sub Randomizar_4()
-    Dim ActualPos As Integer
-    Dim Figura As String
-    Dim Random As String
-    Dim Ya_Trian As Boolean, Ya_Cuad As Boolean, Ya_Rojo As Boolean, Ya_Verde As Boolean
-    ActualPos = 0
-
-    While ActualPos < 4
-        Random = Right(Format(Time, "hh:mm:ss"), 1)
-        Random = Right(Random * Int(Right(Rnd, 1)), 1)
-            If Random = 0 Or Random = 2 Then
-                If Ya_Trian = False Then
-                    Figura = "Triangulo"
-                    Ya_Trian = True
-                    Pos_4(ActualPos) = Figura
-                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
-                    ActualPos = ActualPos + 1
-                End If
-            End If
-                If Random = 1 Or Random = 3 Or Random = 8 Then
-                    If Ya_Cuad = False Then
-                    Figura = "Cuadrado"
-                    Ya_Cuad = True
-                    Pos_4(ActualPos) = Figura
-                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
-                    ActualPos = ActualPos + 1
-                End If
-            End If
-                If Random = 4 Or Random = 6 Or Random = 9 Then
-                If Ya_Rojo = False Then
-                Figura = "Rojo"
-                Ya_Rojo = True
-                Pos_4(ActualPos) = Figura
-                Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
-                ActualPos = ActualPos + 1
-            End If
-        End If
-            If Random = 5 Or Random = 7 Then
-                If Ya_Verde = False Then
-                    Figura = "Verde"
-                    Ya_Verde = True
-                    Pos_4(ActualPos) = Figura
-                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
-                    ActualPos = ActualPos + 1
-                End If
-            End If
-    Wend
-End Sub
+'Sub Randomizar_4()
+'    Dim ActualPos As Integer
+'    Dim Figura As String
+'    Dim Random As String
+'    Dim Ya_Trian As Boolean, Ya_Cuad As Boolean, Ya_Rojo As Boolean, Ya_Verde As Boolean
+'    ActualPos = 0
+'
+'    While ActualPos < 4
+'        Random = Right(Format(Time, "hh:mm:ss"), 1)
+'        Random = Right(Random * Int(Right(Rnd, 1)), 1)
+'            If Random = 0 Or Random = 2 Then
+'                If Ya_Trian = False Then
+'                    Figura = "Triangulo"
+'                    Ya_Trian = True
+'                    Pos_4(ActualPos) = Figura
+'                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\triangulo.jpg")
+'                    ActualPos = ActualPos + 1
+'                End If
+'            End If
+'                If Random = 1 Or Random = 3 Or Random = 8 Then
+'                    If Ya_Cuad = False Then
+'                    Figura = "Cuadrado"
+'                    Ya_Cuad = True
+'                    Pos_4(ActualPos) = Figura
+'                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\cuadrado.jpg")
+'                    ActualPos = ActualPos + 1
+'                End If
+'            End If
+'                If Random = 4 Or Random = 6 Or Random = 9 Then
+'                If Ya_Rojo = False Then
+'                Figura = "Rojo"
+'                Ya_Rojo = True
+'                Pos_4(ActualPos) = Figura
+'                Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\rojo.jpg")
+'                ActualPos = ActualPos + 1
+'            End If
+'        End If
+'            If Random = 5 Or Random = 7 Then
+'                If Ya_Verde = False Then
+'                    Figura = "Verde"
+'                    Ya_Verde = True
+'                    Pos_4(ActualPos) = Figura
+'                    Comp_Test1(ActualPos).Picture = LoadPicture(App.Path & "\data\img\verde.jpg")
+'                    ActualPos = ActualPos + 1
+'                End If
+'            End If
+'    Wend
+'End Sub
 
 
 
@@ -1028,6 +1028,7 @@ Private Sub Componente_Click(Index As Integer)
     Reg_Event
 If EntrenamientoF2 = False Then
     Instancia = "EntrenamientoF1"
+    Fase = 1
     If Component_Pos(Index) = "triangulo" Or Component_Pos(Index) = "rojo" Then
         wmp1.URL = App.Path & "\Sounds\Correct.wav"
         Aciertos = Aciertos + 1
@@ -1090,7 +1091,6 @@ Private Sub Comp_Test1_Click(Index As Integer)
         Mostrar_Test1
         Clicks = Clicks + 1
     End If
-
 End Sub
 
 Private Sub Comp_test2_Click(Index As Integer)
@@ -1184,6 +1184,7 @@ Private Sub Comp_Test6_Click(Index As Integer)
             End
         End If
         Instancia = "EntrenamientoF2"
+        Fase = 2
         Clicks = 0
         Reversion = Reversion + 1
         Fixation.Visible = True
@@ -1202,14 +1203,12 @@ End Sub
 
 Private Sub Command2_Click() ' Este es el boton de acepto y entiendo el concentimiento
     Fixation.Visible = True
-    'guarda los datos del usuario en un excel
     Reg_Usr
     Timer_fixation.Enabled = True
-    'oculta todo
     Hide_All
-    'inicia fase 1 del experimento
     Fase1
     Instancia = "EntrenamientoF1"
+    Fase = 1
 End Sub
 
 Private Sub Command3_Click() ' este es el boton de no acepto y salir
@@ -1243,7 +1242,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Componente_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Instancia = "EntrenamientoF1" Then
+If Instancia = "EntrenamientoF1" Or Instancia = "EntrenamientoF2" Then
     If NoHaRegistrado = False Then
         Evento = "Miró"
         Area = Component_Pos(Index)
@@ -1310,7 +1309,6 @@ Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, X As Single, Y 
     Reg_Event
     NoHaRegistrado = False
     End If
-    
 End Sub
 
 Private Sub Timer_fixation_Timer()
@@ -1471,14 +1469,14 @@ Public Sub Iniciar()
     End With
     With Line1
         .X1 = Fixation.Width / 2
-        .Y1 = (Fixation.Height / 2) - 200
+        .Y1 = (Fixation.Height / 2) - 50
         .X2 = Fixation.Width / 2
-        .Y2 = (Fixation.Height / 2) + 200
+        .Y2 = (Fixation.Height / 2) + 50
     End With
     With Line2
-        .X1 = (Fixation.Width / 2) - 200
+        .X1 = (Fixation.Width / 2) - 50
         .Y1 = Fixation.Height / 2
-        .X2 = (Fixation.Width / 2) + 200
+        .X2 = (Fixation.Width / 2) + 50
         .Y2 = Fixation.Height / 2
     End With
     
@@ -1660,7 +1658,7 @@ Public Sub Iniciar()
         .Left = (AT2_D.Width / 2) - (Comp_Test5(1).Width / 2)
     End With
     
-        'posicionamiento areas presentación y componentes del test 5
+        'posicionamiento areas presentación y componentes del test 6
     With AT2_I
         .Height = (Screen.Height / 2) - (Screen.Height / 8)
         .Width = AT2_I.Height
@@ -1784,22 +1782,26 @@ Public Sub Reg_Event()
         Set REBook = REExcel.Workbooks.Add
         Set RESheet = REBook.Worksheets(1)
         REruta = App.Path & "\data\" & Usr_Cod & ".xlsx"
-        RESheet.range("A1").Value = "FECHA"
+        RESheet.range("A1").Value = "PARTICIPANTE"
         RESheet.range("B1").Value = "HORA"
-        RESheet.range("C1").Value = "EVENTO"
-        RESheet.range("D1").Value = "AREA"
-        RESheet.range("E1").Value = "INSTANCIA"
+        RESheet.range("C1").Value = "DURACIÓN"
+        RESheet.range("D1").Value = "EVENTO"
+        RESheet.range("E1").Value = "AREA"
+        RESheet.range("F1").Value = "INSTANCIA"
+        RESheet.range("G1").Value = "FASE"
         REBook.SaveAs REruta
         Created_ExlRegEve = True
     End If
 
         'Agrega registro
     With RESheet
-        .range("A" & IndxReg).Value = Date
+        .range("A" & IndxReg).Value = Usr_Name
         .range("B" & IndxReg).Value = Format(Time, "hh:nn:ss") & "." & Right(Format(Timer, "#0.000"), 3)
-        .range("C" & IndxReg).Value = Evento
-        .range("D" & IndxReg).Value = Area
-        .range("E" & IndxReg).Value = Instancia
+        .range("C" & IndxReg).Value = Duracion
+        .range("D" & IndxReg).Value = Evento
+        .range("E" & IndxReg).Value = Area
+        .range("F" & IndxReg).Value = Instancia
+        .range("G" & IndxReg).Value = Fase
     End With
 
     'Guardar el excel y cerrarlo
