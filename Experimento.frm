@@ -15,6 +15,27 @@ Begin VB.Form Form1
    ScaleWidth      =   17325
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
+   Begin VB.PictureBox Instrucciones 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      FillStyle       =   0  'Solid
+      ForeColor       =   &H80000008&
+      Height          =   1575
+      Left            =   11640
+      ScaleHeight     =   1545
+      ScaleWidth      =   3105
+      TabIndex        =   39
+      Top             =   4200
+      Width           =   3135
+      Begin VB.CommandButton Empezar 
+         Caption         =   "Empezar"
+         Height          =   495
+         Left            =   360
+         TabIndex        =   40
+         Top             =   240
+         Width           =   1575
+      End
+   End
    Begin VB.PictureBox Blanco 
       Appearance      =   0  'Flat
       BackColor       =   &H00FFFFFF&
@@ -172,7 +193,7 @@ Begin VB.Form Form1
    End
    Begin VB.Timer Timer_fixation 
       Enabled         =   0   'False
-      Interval        =   1000
+      Interval        =   2000
       Left            =   8880
       Top             =   6600
    End
@@ -344,9 +365,9 @@ Begin VB.Form Form1
          Begin VB.CommandButton Command3 
             Caption         =   "No acepto / Salir"
             Height          =   375
-            Left            =   3360
+            Left            =   3840
             TabIndex        =   24
-            Top             =   120
+            Top             =   840
             Width           =   1575
          End
          Begin VB.CommandButton Command2 
@@ -354,7 +375,7 @@ Begin VB.Form Form1
             Height          =   1215
             Left            =   840
             TabIndex        =   23
-            Top             =   600
+            Top             =   1560
             Width           =   4215
          End
          Begin VB.Label Label10 
@@ -403,18 +424,18 @@ Begin VB.Form Form1
             Appearance      =   0  'Flat
             BackColor       =   &H80000005&
             BackStyle       =   0  'Transparent
-            Caption         =   "numero de cedula"
+            Caption         =   "Número de documento"
             ForeColor       =   &H80000008&
             Height          =   255
-            Left            =   480
+            Left            =   1560
             TabIndex        =   17
-            Top             =   960
+            Top             =   600
             Width           =   2175
          End
          Begin VB.Label Label5 
             BackColor       =   &H000000FF&
             BackStyle       =   0  'Transparent
-            Caption         =   "Nombre del paciente"
+            Caption         =   "Nombre"
             Height          =   255
             Left            =   360
             TabIndex        =   16
@@ -431,7 +452,7 @@ Begin VB.Form Form1
       Height          =   3735
       Left            =   5640
       TabIndex        =   1
-      Top             =   720
+      Top             =   840
       Width           =   5055
       Begin VB.TextBox Text3 
          Height          =   375
@@ -504,7 +525,7 @@ Begin VB.Form Form1
       End
       Begin VB.Label Label11 
          BackStyle       =   0  'Transparent
-         Caption         =   "De donde es la cedula:"
+         Caption         =   "De dónde es la cédula"
          Height          =   255
          Left            =   240
          TabIndex        =   22
@@ -525,18 +546,18 @@ Begin VB.Form Form1
       Begin VB.Label Label3 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
-         Caption         =   "Numero cedula:"
+         Caption         =   "Numero de cédula:"
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   720
+         Left            =   480
          TabIndex        =   12
          Top             =   1680
-         Width           =   1215
+         Width           =   1455
       End
       Begin VB.Label Label2 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
-         Caption         =   "Fecha De nacimiento:"
+         Caption         =   "Fecha de nacimiento:"
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   360
@@ -1041,6 +1062,7 @@ If EntrenamientoF2 = False Then
         Instancia = "Test 1"
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_1
         Fixation_Test.Enabled = True
     Else
@@ -1083,6 +1105,7 @@ Private Sub Comp_Test1_Click(Index As Integer)
         Clicks = 0
         Fixation.Visible = True     'telón que se cierra
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_2
         Fixation_Test.Enabled = True
     Else
@@ -1102,6 +1125,7 @@ Private Sub Comp_test2_Click(Index As Integer)
         Clicks = 0
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_3
         Fixation_Test.Enabled = True
     Else
@@ -1122,6 +1146,7 @@ Private Sub Comp_Test3_Click(Index As Integer)
         Clicks = 0
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_4
         Fixation_Test.Enabled = True
     Else
@@ -1142,6 +1167,7 @@ Private Sub Comp_Test4_Click(Index As Integer)
         Clicks = 0
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_5
         Fixation_Test.Enabled = True
     Else
@@ -1162,6 +1188,7 @@ Private Sub Comp_Test5_Click(Index As Integer)
         Clicks = 0
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         Test_6
         Fixation_Test.Enabled = True
     Else
@@ -1189,6 +1216,7 @@ Private Sub Comp_Test6_Click(Index As Integer)
         Reversion = Reversion + 1
         Fixation.Visible = True
         Hide_All
+        SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
         EntrenamientoF2 = True
         Fase1
         Fixation_Test.Enabled = True
@@ -1202,13 +1230,18 @@ Private Sub Comp_Test6_Click(Index As Integer)
 End Sub
 
 Private Sub Command2_Click() ' Este es el boton de acepto y entiendo el concentimiento
-    Fixation.Visible = True
     Reg_Usr
-    Timer_fixation.Enabled = True
-    Hide_All
-    Fase1
+    Instrucciones.Visible = True
+End Sub
+
+Private Sub Empezar_Click() 'Botón de inicio del experimento
+    Fixation.Visible = True
     Instancia = "EntrenamientoF1"
     Fase = 1
+    Timer_fixation.Enabled = True
+    Hide_All
+    SetCursorPos ((Screen.Width / 15) / 2), ((Screen.Height / 15) / 2)
+    Fase1
 End Sub
 
 Private Sub Command3_Click() ' este es el boton de no acepto y salir
@@ -1217,7 +1250,7 @@ End Sub
 
 Private Sub Command1_Click() ' este es el boton de iniciar que esta en el formulario de registro
     'Calcula la edad del paciente
-    Dim Y As Integer
+    Dim y As Integer
     Usr_Age = Right(Date, 4) - Combo3.Text
     'carga las variables con los datos
     Usr_Name = Text1.Text
@@ -1241,7 +1274,7 @@ Private Sub Form_Load()
     Frame1.Visible = True
 End Sub
 
-Private Sub Componente_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Componente_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
 If Instancia = "EntrenamientoF1" Or Instancia = "EntrenamientoF2" Then
     If NoHaRegistrado = False Then
         Evento = "Miró"
@@ -1252,7 +1285,7 @@ If Instancia = "EntrenamientoF1" Or Instancia = "EntrenamientoF2" Then
 End If
 End Sub
 
-Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Muestra_Covers
     If NoHaRegistrado = True Then
     Evento = "Salio a "
@@ -1262,7 +1295,7 @@ Private Sub Blanco_MouseMove(Button As Integer, Shift As Integer, X As Single, Y
     End If
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Muestra_Covers
     If NoHaRegistrado = True Then
     Evento = "Salio a "
@@ -1286,12 +1319,12 @@ Private Sub itt_Timer()
     itt.Enabled = False
 End Sub
 
-Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Pic_Cover_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     Pic_Cover(Index).BackColor = &HFFFFFF
     Componente(Index).Visible = True
 End Sub
 
-Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Muestra_Covers
     If NoHaRegistrado = True Then
     Evento = "Salio a "
@@ -1301,7 +1334,7 @@ Private Sub Pic_L_MouseMove(Button As Integer, Shift As Integer, X As Single, Y 
     End If
 End Sub
 
-Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Pic_R_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Muestra_Covers
     If NoHaRegistrado = True Then
     Evento = "Salio a "
@@ -1413,7 +1446,14 @@ Public Sub Iniciar()
         .Width = 19500
         .Left = Form1.Width / 2 - Picture2.Width / 2
         .Top = Form1.Height / 2 - Picture2.Height / 2
-        .Picture = LoadPicture(App.Path & "\data\consentimiento.jpg")
+        .Picture = LoadPicture(App.Path & "\data\Consentimiento.jpg")
+    End With
+    With Instrucciones
+        .Height = Screen.Height
+        .Width = Screen.Width
+        .Left = Form1.Width / 2 - Instrucciones.Width / 2
+        .Top = Form1.Height / 2 - Instrucciones.Height / 2
+        .Picture = LoadPicture(App.Path & "\data\Instrucciones.jpg")
     End With
     With Label5
         .Width = 5500
@@ -1449,6 +1489,10 @@ Public Sub Iniciar()
         .Top = 9000
         .Left = Picture2.Width / 2 - Command2.Width / 2
     End With
+    With Empezar
+        .Top = 9000
+        .Left = Instrucciones.Width / 2 - Empezar.Width / 2
+    End With
     With Command3
         .Top = 200
         .Left = Picture2.Width - (Command3.Width + 200)
@@ -1468,12 +1512,14 @@ Public Sub Iniciar()
         .Left = 0
     End With
     With Line1
+        .Visible = False
         .X1 = Fixation.Width / 2
         .Y1 = (Fixation.Height / 2) - 50
         .X2 = Fixation.Width / 2
         .Y2 = (Fixation.Height / 2) + 50
     End With
     With Line2
+        .Visible = False
         .X1 = (Fixation.Width / 2) - 50
         .Y1 = Fixation.Height / 2
         .X2 = (Fixation.Width / 2) + 50
@@ -1704,6 +1750,7 @@ Public Sub Hide_All()
     Pic_R.Visible = False
     AT2_I.Visible = False
     AT2_D.Visible = False
+    Instrucciones.Visible = False
     Pic_Arriba_Izq.Visible = False
     Pic_Abajo_Izq.Visible = False
     Pic_Arriba_Der.Visible = False
